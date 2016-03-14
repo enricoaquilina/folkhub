@@ -1,0 +1,11 @@
+.container
+  .jumbotron
+    h1 FolkHub
+    p FolkHub is a hub where folks can hang out. We encourage you to 
+      discover the number of hubs available and share your knowledge with the community.
+
+  .row
+    .col-md-6
+      div(ng-include="'/partials/main/popular-hubs'")
+    .col-md-6
+      div(ng-include="'/partials/main/new-hubs'")

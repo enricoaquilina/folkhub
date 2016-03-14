@@ -1,6 +1,22 @@
 extends ../includes/layout
 
 block main-content
+  .navbar.navbar-inverse.navbar-fixed-top
+    .container
+      .navbar-header
+        a.navbar-brand(href="/") FolkHub
+          h6 A hub where folks hang out
+      .navbar-collapse.collapse
+        ul.nav.navbar-nav
+          li
+            a(href="/") My Hubs
+          li
+            a(href="/") Discover
+          li
+            a(href="/") Trending Hubs  
+        div(ng-include="'/partials/account/menu-login'")
   section.content
     div(ng-view)
-  h2= message
+  
+  footer.container.text-center
+    p &copy; 2016 FolkHub 

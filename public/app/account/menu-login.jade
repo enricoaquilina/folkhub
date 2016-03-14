@@ -1,0 +1,11 @@
+.navbar-right(ng-controller="mvMenuLoginCtrl")
+  form.navbar-form
+    .form-group
+      input.form-control(placeholder="Email", ng-model="email")
+    .form-group
+      input.form-control(placeholder="Password", ng-model="password")
+    button.btn.btn-primary(ng-click="authenticate(email, password)") Sign in
+    //- .form-group
+    //-   input.form-control(placeholder="Email", ng-model="email")
+    //- .form-group
+    //-   input.form-control(placeholder="Email", ng-model="email")

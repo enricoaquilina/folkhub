@@ -17,7 +17,7 @@ function compile(str, path){
 //since it's gonna be a SPA views have been put in server folder
 app.set("views", __dirname + '/server/views');
 app.set('view engine', 'jade');
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 //configure stylus middleware itself
@@ -44,25 +44,18 @@ db.on('error', console.error.bind(console, 'connection error...'));
 db.once('open', function cb(){
   console.log('folkhub db opened..');
 });
-var messageSchema = mongoose.Schema({message:String});
-var messageModel = mongoose.model('Message', messageSchema);
-
-var mongoMessage;
-messageModel.findOne().exec(function(err, result){
-  mongoMessage = result.message;
-});
 
 /*add a route which delivers the index page for all routes
 asterisk will match all routes which are not previously defined
 (kinda like the default in a switch statement)
-
-server side just serves index..on the client it handles the routing
 */
-app.get('/partials/:path', function(req, res){
-  res.render('partials/'+req.params.path);
+//this will look in the public/app directory and process the files as jade templates
+app.get('/partials/*', function(req, res){
+  res.render('../../public/app/'+req.params[0]);
+
 });
 app.get('*', function(req, res){
-  res.render('index', {message:mongoMessage});
+  res.render('index');
 })
 
 
