@@ -1,13 +1,12 @@
-angular.module('app').controller('mvMenuLoginCtrl', function($scope, $http){
+angular.module('app').controller('mvMenuLoginCtrl', function($scope, $http, mvNotifier, mvIdentity, mvAuth){
+  $scope.identity = mvIdentity;
   $scope.authenticate = function(username, password){
-    $http.post('/login', { username: username, password: password })
-    .then(function(response){
-      if(response.data.success){
-        //this means that user was found and therefore a user object is present
-        //therefore create session
-        console.log('logged in!');
+    mvAuth.authenticate(username, password)
+    .then(function(success){
+      if(success){
+        mvNotifier.success('You have successfully logged in!');
       }else{
-        console.log('failed to log in!');
+        mvNotifier.error('Incorrect username/ password combination!');
       }
     });
   }

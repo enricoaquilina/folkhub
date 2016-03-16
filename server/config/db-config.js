@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    crypto = require('crypto');
 
 module.exports = function(app, config){
   //connect to mongoose
@@ -20,34 +21,64 @@ module.exports = function(app, config){
     email: String,
     password: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    salt: String,
+    hashed_pwd: String
   });
+
+  userSchema.methods = {
+    authenticate: function(inputtedPassword){
+      return hashPwd(this.salt, inputtedPassword) === this.hashed_pwd;
+    }
+  }
 
   var User = mongoose.model('User', userSchema);
 
   User.find({}).exec(function(err, resultSet){
     if(resultSet.length === 0){
+        var salt = createSalt();
+        var hash = hashPwd(salt, 'hope');
         User.create({
-          userName: 'profmouse',
+          userName: 'hope',
           email:'t@t.com',
-          password: 'xyz',
           firstName: 'Enrico',
-          lastName: 'Aquilina'
+          lastName: 'Aquilina',
+          salt: salt,
+          hashed_pwd: hash
         });
+
+        salt = createSalt();
+        hash = hashPwd(salt, 'faith');
         User.create({
-          userName: 'profmouse',
+          userName: 'faith',
           email:'x@x.com',
-          password: 'xyz',
           firstName: 'Vladimir',
-          lastName: 'Putin'
+          lastName: 'Putin',
+          salt: salt,
+          hashed_pwd: hash
         });
+
+        salt = createSalt();
+        hash = hashPwd(salt, 'lol');
         User.create({
-          userName: 'profmouse',
+          userName: 'lol',
           email:'t@t.com',
-          password: 'xyz',
           firstName: 'Barack',
-          lastName: 'Obama'
+          lastName: 'Obama',
+          salt: salt,
+          hashed_pwd: hash
         });
     }
   });
+}
+
+function createSalt(){
+  return crypto.randomBytes(128).toString('base64');
+}
+function hashPwd(salt, pwd){
+  var hmac = crypto.createHmac('sha1', salt);
+  hmac.setEncoding('hex');
+  hmac.write(pwd);
+  hmac.end();
+  return hmac.read();
 }
