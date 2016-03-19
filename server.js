@@ -19,6 +19,7 @@ passport.use(new LocalStrategy(
   function(username, password, done){
     UserModel.findOne({userName: username}).exec(function(err, user){
       if(user && user.authenticate(password)){
+          //dont send unnecessary info to client
           var User = {
             firstName: user.firstName,
             lastName: user.lastName,
@@ -32,21 +33,13 @@ passport.use(new LocalStrategy(
     })
   }
 ));
-
-passport.serializeUser(function(user, done){
-  if(user){
-    done(null, user._id);
-  }
+//joe eames uses code which is slightly different for serial/deserial just fyi.
+passport.serializeUser(function(user, done) {
+  done(null, user);
 });
 
-passport.deserializeUser(function(id, done){
-  UserModel.findOne({_id: id}).exec(function(err, user){
-    if(user){
-      return done(null, user);
-    }else{
-      return done(null, false);
-    }
-  })
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
 
 require('./server/config/routes')(app);
