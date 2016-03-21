@@ -15,4 +15,13 @@ exports.authenticate = function(req, res, next){
     })
   })
   auth(req, res, next);
+};
+
+exports.apiLogin = function(req, res, next){
+  if(!req.isAuthenticated()){
+    res.status(403);
+    res.end();
+  }else{
+    next();
+  }
 }
