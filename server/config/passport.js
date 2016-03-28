@@ -8,16 +8,16 @@ module.exports = function(){
   passport.use(new LocalStrategy(
     function(username, password, done){
       UserModel.findOne({
-         $or: [ { userName : username }, { email: username } ]
+         $or: [ { username : username }, { email: username } ]
        }).exec(function(err, user){
         if(user && user.authenticate(password)){
             //dont send unnecessary info to client
             var User = {
               _id: user._id,
-              firstName: user.firstName,
-              lastName: user.lastName,
+              firstname: user.firstname,
+              lastname: user.lastname,
               email: user.email,
-              userName: user.userName,
+              username: user.username,
               roles: user.roles
             }
             return done(null, User);

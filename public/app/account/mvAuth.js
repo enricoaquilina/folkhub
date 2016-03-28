@@ -25,6 +25,25 @@ angular.module('app').factory('mvAuth', function($q, $http, mvIdentity, mvUser){
         dfd.resolve(true);
       });
       return dfd.promise;
+    },
+    authorizeUserForRoute: function(role) {
+      if(mvIdentity.isAuthorized(role)){
+        return true;
+      }else{
+        //this will notify us when listening to the route change
+        return $q.reject('unauthorized');
+      }
+    },
+    signUp: function(newUserData){
+      var dfd = $q.defer();
+      var newUser = new mvUser(newUserData);
+      newUser.$save().then(function(){
+        mvIdentity.currentUser = newUser;
+        dfd.resolve();
+      }, function(response){
+        dfd.reject(response.data.reason);
+      });
+      return dfd.promise;
     }
   }
 });

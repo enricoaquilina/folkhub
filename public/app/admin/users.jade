@@ -1,0 +1,22 @@
+.container
+  .panel.panel-primary
+    .panel-heading.text-center Folks in da hub!
+  table.table.table-condensed.table-hover.table-striped
+    tr
+      td
+        label Username
+      td
+        label Email
+      td
+        label First name
+      td
+        label Last name
+    tr(ng-repeat="user in users")
+      td
+        {{ user.username }}
+      td
+        {{ user.email }}
+      td
+        {{ user.firstname }}
+      td
+        {{ user.lastname }}

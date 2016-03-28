@@ -1,6 +1,8 @@
 var passport = require('passport');
 
 exports.authenticate = function(req, res, next){
+  req.body.username = req.body.username.toLowerCase();
+
   var auth = passport.authenticate('local', function(err, user){
     //this uses the method defined in server.js for LocalStrategy
     if(err) { return next(err); }
@@ -24,4 +26,19 @@ exports.apiLogin = function(req, res, next){
   }else{
     next();
   }
+}
+
+exports.requiresRole = function(role){
+  return function(req,res,next){
+    if(req.isAuthenticated() && req.user.roles.indexOf(role) > -1){
+      next();
+    }else{
+      res.status(403);
+      res.end();
+    }
+  }
+}
+
+exports.signUp = function(req, res, next){
+  return false;
 }
