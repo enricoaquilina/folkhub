@@ -1,0 +1,18 @@
+.container
+  .panel.panel-primary
+    .panel-heading.text-center Available hubs
+  table.table.table-condensed.table-hover.table-striped
+    tr
+      td
+        label Hub Name
+      td
+        label Description
+      td
+        label Picture
+      td
+        label Helpers
+    tr(ng-repeat="hub in hubs")
+      td {{ hub.hubname }}
+      td {{ hub.description }}
+      td {{ hub.picture }}
+      td {{ hub.helpers }}

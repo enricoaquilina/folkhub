@@ -1,5 +1,4 @@
-angular.module('app')
-  .factory('mvRegister', function($q, $http){
+angular.module('app').factory('Register', function($q, $http){
     return {
       signUp: function(username, email, password){
         var dfd = $q.defer();

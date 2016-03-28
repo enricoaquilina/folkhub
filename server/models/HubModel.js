@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Message  = require('./Message');
+    Message  = require('./MessageModel');
 
 var Hub = mongoose.Schema({
   hubname: {type:String, unique: true},

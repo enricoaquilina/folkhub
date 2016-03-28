@@ -3,8 +3,8 @@ angular.module('app', ['ngResource', 'ngRoute']);
 angular.module('app').config(function($routeProvider, $locationProvider){
   var routeRoleChecks = {
     admin: {
-      auth: function(mvAuth){
-        return mvAuth.authorizeUserForRoute('admin')
+      auth: function(Auth){
+        return Auth.authorizeUserForRoute('admin')
       }
     }
   }
@@ -33,6 +33,13 @@ angular.module('app').config(function($routeProvider, $locationProvider){
       {
         templateUrl: '/partials/account/register',
         controller: 'mvSignUpCtrl'
+      }
+    )
+    .when('/admin/hubs',
+      {
+        templateUrl: '/partials/hub/hubs',
+        controller: 'mvHubsCtrl',
+        resolve: routeRoleChecks.admin
       }
     );
 });

@@ -1,4 +1,4 @@
-angular.module('app').factory('mvUser', function($resource){
+angular.module('app').factory('UserRsc', function($resource){
   var UserResource = $resource('/api/users/:id', {_id: "@id"});
 
   UserResource.prototype.isAdmin = function(){

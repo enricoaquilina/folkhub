@@ -1,6 +1,6 @@
 .container
   .well
-    form.form-horizontal(ng-show="identity.isAuthenticated()" name="hubcreateForm")
+    form.form-horizontal(name="hubcreateForm")
       fieldset Create a hub
       table.table
         tr
@@ -8,25 +8,25 @@
             label Hub Name
           td
             .form-group
-              input.form-control(placeholder="What's your hub's name?", type="text" ng-model="hubname")
+              input.form-control(placeholder="What's your hub's name?", type="text" ng-model="name")
         tr
           td
             label Description
           td
             .form-group
-              input.form-control(placeholder="Describe your hub", type="text" ng-model="hubdescription")
+              input.form-control(placeholder="Describe your hub", type="text" ng-model="description")
         tr
           td
             label Picture
           td
             .form-group
-              input.form-control(placeholder="Password", data-icon="false" type="file" ng-model="hubpicture")        
+              input.form-control(placeholder="Password", data-icon="false" type="file" ng-model="picture")        
         tr
           td
             label Keywords
           td
             .form-group
-              input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="hubpicture")        
+              input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="helpers")        
       button.btn.btn-primary(ng-click="createHub()" ng-disabled="hubcreateForm.$invalid") Build your hub!
       | &nbsp;
       a.btn.btn-default(href="/") Cancel

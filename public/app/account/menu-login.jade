@@ -11,10 +11,10 @@
   ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
     li.dropdown
       a.dropdown-toggle(href="", data-toggle="dropdown")
-        |{{identity.currentUser.username}}
+        |{{identity.currentuser.username}}
         b.caret
       ul.dropdown-menu
-        li(ng-show="identity.currentUser.isAdmin()")
+        li(ng-show="identity.currentuser.isAdmin()")
           a(href="/admin/users", ng-click="") User Admin
         li
           a(href="/create", ng-click="") Create Hub

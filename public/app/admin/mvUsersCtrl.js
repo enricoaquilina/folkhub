@@ -1,4 +1,4 @@
-angular.module('app').controller('mvUsersCtrl', function($scope, mvUser){
+angular.module('app').controller('mvUsersCtrl', function($scope, UserRsc){
   //assign scope to list of users
-  $scope.users = mvUser.query();
+  $scope.users = UserRsc.query();
 });

@@ -1,7 +1,7 @@
 //wrap toastr into a service
 angular.module('app').value('mvToastr', toastr);
 
-angular.module('app').factory('mvNotifier', function(mvToastr){
+angular.module('app').factory('Notifier', function(mvToastr){
   return {
     success : function(msg){
       mvToastr.success(msg);

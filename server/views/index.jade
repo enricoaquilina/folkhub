@@ -6,14 +6,14 @@ block main-content
       .navbar-header
         a.navbar-brand(href="/") FolkHub
           h6 A hub where folks hang out
-      .navbar-collapse.collapse
+      .navbar-collapse.collapse(ng-controller="mvAccountCtrl as login")
         ul.nav.navbar-nav
           li
             a(href="/") My Hubs
+          li(ng-show="identity.currentuser.isAdmin()")
+            a(href="/admin/hubs" ) Discover
           li
-            a(href="/") Discover
-          li
-            a(href="/") Trending Hubs  
+            a(href="/create") Create Hub
         div(ng-include="'/partials/account/menu-login'")
   section.content
     div(ng-view)

@@ -1,13 +1,13 @@
-angular.module('app').factory('mvAuth', function($q, $http, mvIdentity, mvUser){
+angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc){
   return {
     authenticate: function(username, password){
       var dfd = $q.defer();
       $http.post('/login', { username: username, password: password })
       .then(function(response){
         if(response.data.success){
-          var user = new mvUser();
+          var user = new UserRsc();
           angular.extend(user, response.data.user);
-          mvIdentity.currentUser = user;
+          Identity.currentuser = user;
           //this means that user was found and therefore a user object is present
           //therefore create session
           dfd.resolve(true);
@@ -21,13 +21,13 @@ angular.module('app').factory('mvAuth', function($q, $http, mvIdentity, mvUser){
       var dfd = $q.defer();
       //we give this a body, otherwise angular turns it into a GET
       $http.post('/logout', {logout:true}).then(function(){
-        mvIdentity.currentUser = undefined;
+        Identity.currentuser = undefined;
         dfd.resolve(true);
       });
       return dfd.promise;
     },
     authorizeUserForRoute: function(role) {
-      if(mvIdentity.isAuthorized(role)){
+      if(Identity.isAuthorized(role)){
         return true;
       }else{
         //this will notify us when listening to the route change
@@ -36,9 +36,9 @@ angular.module('app').factory('mvAuth', function($q, $http, mvIdentity, mvUser){
     },
     signUp: function(newUserData){
       var dfd = $q.defer();
-      var newUser = new mvUser(newUserData);
+      var newUser = new UserRsc(newUserData);
       newUser.$save().then(function(){
-        mvIdentity.currentUser = newUser;
+        Identity.currentUser = newUser;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);
