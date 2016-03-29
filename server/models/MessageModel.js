@@ -9,7 +9,6 @@ var messageSchema = mongoose.Schema({
 
 messageSchema.methods = {
   search: function(hubName){
-    var x = "test";
   }
 }
 var Message = mongoose.model('Message', messageSchema);
