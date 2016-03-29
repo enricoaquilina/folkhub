@@ -10,7 +10,7 @@ var Hub = mongoose.Schema({
 
 Hub.methods = {
   search: function(hubName){
-
+    var x = "test";
   }
 }
 var Hub = mongoose.model('Hub', Hub);
