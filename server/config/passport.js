@@ -27,21 +27,28 @@ module.exports = function(){
       })
     }
   ));
-  //joe eames uses code which is slightly different for serial/deserial just fyi.
+  //this is according to passport documentation
   passport.serializeUser(function(user, done) {
     if(user){
-      done(null, user);
+      done(null, user._id);
     }
   });
 
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
-    // UserModel.findOne({_id:userId}).exec(function(err, user){
+  passport.deserializeUser(function(id, done) {
+    UserModel.findById(id, function(err, user){
+      if(user){
+        done(err, user);
+      }else{
+        done(err, false);
+      }
+    });
+    // UserModel.findOne({_id:id}).exec(function(err, user){
     //   if(user){
     //     return done(null, user);
     //   }else{
     //     return done(null, false);
     //   }
     // })
+
   });
 }

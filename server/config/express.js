@@ -16,6 +16,9 @@ module.exports = function(app, config){
   //since it's gonna be a SPA views have been put in server folder
   app.set("views", config.rootPath + '/server/views');
   app.set('view engine', 'jade');
+  //this is saying that when a request comes in requesting the public directory
+  //go ahead and serve the file.
+  app.use(express.static(config.rootPath + '/public'));
   //app.use(logger('dev'));
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended:true}));
@@ -27,6 +30,7 @@ module.exports = function(app, config){
   }));
   app.use(passport.initialize());
   app.use(passport.session());
+
   //configure stylus middleware itself
   app.use(stylus.middleware(
     {
@@ -34,7 +38,5 @@ module.exports = function(app, config){
       compile: compile
     }
   ));
-  //this is saying that when a request comes in requesting the public directory
-  //go ahead and serve the file.
-  app.use(express.static(config.rootPath + '/public'));
+
 }

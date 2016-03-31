@@ -1,0 +1,22 @@
+.container
+  .panel.panel-primary
+    .panel-heading.text-center Available hubs
+  table.table.table-condensed.table-hover.table-striped
+    tra
+      td
+        label Hub Name
+      td
+        label Description
+      td
+        label Picture
+      td
+        label Helpers
+    tr(ng-repeat="hub in myhubs")
+      td 
+        a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.hubname}}
+      td
+        a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.description}}
+      td
+        a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.picture}}
+      td
+        a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.helpers}}

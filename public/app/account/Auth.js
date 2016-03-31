@@ -34,11 +34,36 @@ angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc){
         return $q.reject('unauthorized');
       }
     },
-    signUp: function(newUserData){
+    isUserAuthenticated: function(){
+      if(Identity.isAuthenticated()){
+        return true;
+      }else{
+        //this will notify us when listening to the route change
+        return $q.reject('unauthorized');
+      }
+    },
+    update: function(userData){
       var dfd = $q.defer();
-      var newUser = new UserRsc(newUserData);
+
+      //we create a copy of the currentuser in case
+      //the update fails
+      var clone = angular.copy(Identity.currentuser);
+      angular.extend(clone, userData);
+
+      clone.$update().then(function(){
+
+        Identity.currentuser = clone;
+        dfd.resolve();
+      }, function(response){
+        dfd.reject(response.data.reason);
+      });
+      return dfd.promise;
+    },
+    signUp: function(userData){
+      var dfd = $q.defer();
+      var newUser = new UserRsc(userData);
       newUser.$save().then(function(){
-        Identity.currentUser = newUser;
+        Identity.currentuser = newUser;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);

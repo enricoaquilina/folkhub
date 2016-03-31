@@ -6,6 +6,13 @@ exports.getHubs = function(req, res, next){
   });
 }
 
+exports.getUserHubs = function(req, res, next){
+
+  HubModel.find({creator: req.params.username}).exec(function(err, collection){
+    res.send(collection);
+  })
+}
+
 exports.createHub = function(req, res, next){
   var newHub = req.body;
 

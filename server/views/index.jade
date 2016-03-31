@@ -9,10 +9,10 @@ block main-content
       .navbar-collapse.collapse(ng-controller="mvAccountCtrl as login")
         ul.nav.navbar-nav
           li
-            a(href="/") My Hubs
+            a(href="/hubs/{{identity.currentuser.username}}") My Hubs 
           li(ng-show="identity.currentuser.isAdmin()")
             a(href="/admin/hubs" ) Discover
-          li
+          li(ng-show="identity.currentuser.isAuthenticated()")
             a(href="/create") Create Hub
         div(ng-include="'/partials/account/menu-login'")
   section.content

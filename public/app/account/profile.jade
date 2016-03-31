@@ -1,0 +1,38 @@
+.container
+  .well
+    form.form-horizontal(ng-hide="identity.isAuthenticated()" name="profileForm")
+      fieldset Profile information
+      table.table
+        tr
+          td
+            label Username
+          td
+            .form-group
+              input.form-control(placeholder="Your username here", type="text" ng-model="username")
+        tr
+          td
+            label Email
+          td
+            .form-group
+              input.form-control(placeholder="Your email here", type="text" ng-model="email")
+        tr
+          td
+            label First name
+          td
+            .form-group
+              input.form-control(placeholder="Your first name here", type="text" ng-model="firstname")                
+        tr
+          td
+            label Last name
+          td
+            .form-group
+              input.form-control(placeholder="Your last name here", type="text" ng-model="lastname")
+        tr
+          td
+            label Password
+          td
+            .form-group
+              input.form-control(placeholder="Password", type="password" ng-model="password")        
+      button.btn.btn-primary(ng-click="update()" ng-disabled="update.$invalid") Update
+      | &nbsp;
+      a.btn.btn-default(href="/") Cancel

@@ -1,16 +1,18 @@
 var auth = require('./auth'),
     mongoose = require('mongoose'),
     UserModel = mongoose.model('User'),
-    users = require('./users'),
-    hubs = require('./hubs');
+    users = require('../controllers/users'),
+    hubs = require('../controllers/hubs');
 
 module.exports = function(app){
   //this will look in the public/app directory and process the files as jade templates
 
   app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
   app.post('/api/users', users.createUser);
+  app.put('/api/users', users.updateUser);
 
   app.get('/api/hubs', auth.requiresRole('admin'), hubs.getHubs);
+  app.get('/api/hubs/:username', hubs.getUserHubs);
   app.post('/api/hubs', hubs.createHub);
 
   app.get('/partials/*', function(req, res){

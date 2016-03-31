@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 var messageSchema = mongoose.Schema({
   content: {type:String},
   userid: {type:String, unique:true},
-  parenthubid  : { type: Schema.Types.ObjectId, ref: 'Hub' }
+  parenthubid: { type: Schema.Types.ObjectId, ref: 'Hub' }
 });
 
 messageSchema.methods = {
