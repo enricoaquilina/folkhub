@@ -13,17 +13,9 @@
         label Helpers
       td
         label Creator
-      td
-      td
     tr(ng-repeat="hub in hubs")
       td {{ hub.hubname }}
       td {{ hub.description }}
       td {{ hub.picture }}
       td {{ hub.helpers }}
       td {{ hub.creator }}
-      td 
-        a.btn.btn-default(href="/{{hub.hubname}}/update") Update
-      td 
-        a.btn.btn-danger(href="/{{hub.hubname}}/delete") Delete
-        
-        

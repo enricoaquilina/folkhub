@@ -15,7 +15,7 @@
         label Creator
       td
       td
-    tr(ng-repeat="hub in hubs")
+    tr(ng-repeat="hub in myhubs")
       td {{ hub.hubname }}
       td {{ hub.description }}
       td {{ hub.picture }}
@@ -25,5 +25,5 @@
         a.btn.btn-default(href="/{{hub.hubname}}/update") Update
       td 
         a.btn.btn-danger(href="/{{hub.hubname}}/delete") Delete
-        
+
         

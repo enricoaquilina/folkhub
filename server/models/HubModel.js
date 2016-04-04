@@ -7,7 +7,8 @@ var Hub = mongoose.Schema({
   description: {type:String, unique:true},
   picture: {type: String},
   helpers: [String],
-  creator: {type:String}
+  creator: {type:String},
+  datecreated: {type:Date, default:Date.now}
 });
 
 Hub.methods = {

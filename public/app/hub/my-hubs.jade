@@ -11,6 +11,7 @@
         label Picture
       td
         label Helpers
+      td
     tr(ng-repeat="hub in myhubs")
       td 
         a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.hubname}}
@@ -20,3 +21,6 @@
         a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.picture}}
       td
         a(href="/hub/{{hub.hubname}}", ng-click="") {{hub.helpers}}
+      td
+        a(href="/update-hub/{{hub.hubname}}", ng-click="") Update
+      

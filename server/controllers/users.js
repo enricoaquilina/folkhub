@@ -42,7 +42,6 @@ exports.updateUser = function(req, res){
     res.status(403);
     return res.end();
   }
-
   req.user.firstname = userData.firstname;
   req.user.lastname = userData.lastname;
   req.user.email = userData.email;
@@ -60,5 +59,4 @@ exports.updateUser = function(req, res){
     }
     res.send(req.user);
   });
-
 };

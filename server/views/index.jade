@@ -7,12 +7,12 @@ block main-content
         a.navbar-brand(href="/") FolkHub
           h6 A hub where folks hang out
       .navbar-collapse.collapse(ng-controller="mvAccountCtrl as login")
-        ul.nav.navbar-nav
+        ul.nav.navbar-nav(ng-show="identity.isAuthenticated()")
           li
-            a(href="/hubs/{{identity.currentuser.username}}") My Hubs 
-          li(ng-show="identity.currentuser.isAdmin()")
-            a(href="/admin/hubs" ) Discover
-          li(ng-show="identity.currentuser.isAuthenticated()")
+            a(href="/{{identity.currentuser.username}}/hubs") My Hubs 
+          li 
+            a(href="/hubs" ) Discover
+          li
             a(href="/create") Create Hub
         div(ng-include="'/partials/account/menu-login'")
   section.content

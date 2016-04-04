@@ -11,9 +11,12 @@ module.exports = function(app){
   app.post('/api/users', users.createUser);
   app.put('/api/users', users.updateUser);
 
-  app.get('/api/hubs', auth.requiresRole('admin'), hubs.getHubs);
+  app.get('/api/hubs', hubs.getHubs);
+  //  auth.requiresRole('admin'),
   app.get('/api/hubs/:username', hubs.getUserHubs);
+  app.post('/getHubDetails', hubs.getHubDetails);
   app.post('/api/hubs', hubs.createHub);
+  app.put('/api/hubs/:hubname', hubs.updateHub);
 
   app.get('/partials/*', function(req, res){
     res.render('../../public/app/' + req.params[0]);

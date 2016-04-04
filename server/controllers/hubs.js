@@ -7,9 +7,16 @@ exports.getHubs = function(req, res, next){
 }
 
 exports.getUserHubs = function(req, res, next){
-
   HubModel.find({creator: req.params.username}).exec(function(err, collection){
     res.send(collection);
+  })
+}
+
+exports.getHubDetails = function(req, res, next){
+  HubModel.findOne({ hubname: req.body.hubname}).exec(function(err, hub){
+    console.log('here');
+    if(err) {return next(err);}
+    res.send({success:true, hub:hub});
   })
 }
 
@@ -26,4 +33,29 @@ exports.createHub = function(req, res, next){
     }
     res.send(newHub);
   })
+}
+
+exports.updateHub = function(req, res, next){
+  var hubData = req.body;
+
+  if(hubData._id != req.user._id && !req.user.hasRole('admin')){
+    res.status(403);
+    return res.end();
+  }
+  //
+  // req.user.save(function(err){
+  //   if(err){
+  //     res.status(400);
+  //
+  //     return res.send({reason:err.toString()});
+  //   }
+  //   res.send(req.user);
+  // });
+
+  HubModel.findOneAndUpdate({_id: hubData._id}, hubData, function (err, hub) {
+    if(err){
+      res.status(400);
+    }
+    res.send(hub);
+  });
 }

@@ -18,7 +18,7 @@
           a(href="/profile", ng-click="") Profile
         li(ng-show="identity.currentuser.isAdmin()")
           a(href="/admin/users", ng-click="") User Admin
-        li
-          a(href="/create", ng-click="") Create Hub
+        li(ng-show="identity.currentuser.isAdmin()")
+          a(href="/admin/hubs", ng-click="") Hub Admin
         li 
           a(href="", ng-click="signOut()") Sign out

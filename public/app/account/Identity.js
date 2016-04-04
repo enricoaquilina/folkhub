@@ -1,5 +1,7 @@
 angular.module('app').factory('Identity', function($window, UserRsc){
   var currentuser;
+  var currenthub;
+  
   if($window.bootstrappedUserObject){
     currentuser = new UserRsc();
     angular.extend(currentuser, $window.bootstrappedUserObject);

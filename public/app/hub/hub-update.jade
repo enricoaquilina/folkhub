@@ -1,0 +1,32 @@
+.container(ng-controller="mvAccountCtrl as login")
+  .well
+    form.form-horizontal(name="hubupdateForm")
+      fieldset Update details
+      table.table
+        tr
+          td
+            label Hub Name
+          td
+            .form-group
+              input.form-control(type="text" ng-model="hubname")
+        tr
+          td
+            label Description
+          td
+            .form-group
+              input.form-control(placeholder="Describe your hub", type="text" ng-model="description")
+        tr
+          td
+            label Picture
+          td
+            .form-group
+              input.form-control(placeholder="Password", data-icon="false" type="file" ng-model="picture")        
+        tr
+          td
+            label Keywords
+          td
+            .form-group
+              input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="helpers")        
+      button.btn.btn-primary(ng-click="updateHub()" ng-disabled="hubupdateForm.$invalid") Update
+      | &nbsp;
+      a.btn.btn-default(href="/{{identity.currentuser.username}}/hubs") Cancel
