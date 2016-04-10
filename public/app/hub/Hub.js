@@ -1,4 +1,4 @@
-angular.module('app').factory('Hub', function($q, $http, HubRsc, Identity){
+angular.module('app').factory('Hub', function($q, $routeParams, $http, HubRsc, Identity){
   return {
     createHub: function(newHubData){
       var dfd = $q.defer();
@@ -12,12 +12,32 @@ angular.module('app').factory('Hub', function($q, $http, HubRsc, Identity){
     },
     update: function(hubData){
       var dfd = $q.defer();
-
       var clone = angular.copy(Identity.currenthub);
       angular.extend(clone, hubData);
 
       clone.$update().then(function(){
-        Identity.currenthub = clone;
+        Identity.currenthub = hubData;
+        dfd.resolve();
+      }, function(response){
+        dfd.reject(response.data.reason);
+      });
+      return dfd.promise;
+    },
+    delete: function(hubData){
+      var dfd = $q.defer();
+
+      // $http.post('/deletehub', { hub : hubData })
+      //   .then(function(){
+      //   Identity.currenthub = undefined;
+      //   dfd.resolve(true);
+      // });
+      // return dfd.promise;
+
+      var clone = angular.copy(Identity.currenthub);
+      angular.extend(clone, hubData);
+
+      clone.$deletehub().then(function(){
+        Identity.currenthub = undefined;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);
@@ -32,13 +52,23 @@ angular.module('app').factory('Hub', function($q, $http, HubRsc, Identity){
            response.data.hub.creator === Identity.currentuser.username){
           var hub = new HubRsc();
           angular.extend(hub, response.data.hub);
-          console.log(response.data.hub);
+
           Identity.currenthub = hub;
           dfd.resolve(true);
         }else{
           dfd.resolve(false);
         }
       });
+      return dfd.promise;
+    },
+    isHubOwnerAuthenticated: function(hubowner){
+      var dfd = $q.defer();
+      if(Identity.currentuser &&
+        Identity.currentuser.username === hubowner){
+        dfd.resolve();
+      }else{
+        dfd.reject('Please use the site\'s links to view a users\' hubs!');
+      }
       return dfd.promise;
     }
   }

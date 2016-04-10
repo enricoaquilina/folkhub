@@ -14,7 +14,6 @@ exports.getUserHubs = function(req, res, next){
 
 exports.getHubDetails = function(req, res, next){
   HubModel.findOne({ hubname: req.body.hubname}).exec(function(err, hub){
-    console.log('here');
     if(err) {return next(err);}
     res.send({success:true, hub:hub});
   })
@@ -35,6 +34,25 @@ exports.createHub = function(req, res, next){
   })
 }
 
+exports.deleteHub = function(req, res, next){
+  var hubData = req.body;
+
+  if(hubData._id != req.user._id && !req.user.hasRole('admin')){
+    res.status(403);
+    return res.end();
+  }
+  // HubModel.findOne({ id: hubData._id }).remove().exec();
+  HubModel.findOne({ id: hubData._id }, function (err, model) {
+    if (err) {
+        res.status(400);
+    }
+    model.remove(function (err) {
+        res.status(200);
+    });
+    return res.end();
+  });
+}
+
 exports.updateHub = function(req, res, next){
   var hubData = req.body;
 
@@ -42,19 +60,14 @@ exports.updateHub = function(req, res, next){
     res.status(403);
     return res.end();
   }
-  //
-  // req.user.save(function(err){
-  //   if(err){
-  //     res.status(400);
-  //
-  //     return res.send({reason:err.toString()});
-  //   }
-  //   res.send(req.user);
-  // });
 
   HubModel.findOneAndUpdate({_id: hubData._id}, hubData, function (err, hub) {
     if(err){
+      if(err.toString().indexOf('E11000') > -1){
+        err = new Error('There already is a hub with the same name!');
+      }
       res.status(400);
+      return res.send({reason:err.toString()});
     }
     res.send(hub);
   });

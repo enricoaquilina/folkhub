@@ -11,6 +11,11 @@ angular.module('app').config(function($routeProvider, $locationProvider){
       auth: function(Auth){
         return Auth.isUserAuthenticated()
       }
+    },
+    hubowner: {
+      auth: function(Hub){
+        return Hub.isUserHubOwner();
+      }
     }
   }
   $locationProvider.html5Mode(true);
@@ -63,8 +68,7 @@ angular.module('app').config(function($routeProvider, $locationProvider){
     .when('/:username/hubs',
       {
         templateUrl: '/partials/hub/user-hubs',
-        controller: 'mvUserHubsCtrl',
-        resolve: routeRoleChecks.signedin
+        controller: 'mvUserHubsCtrl'
       }
     )
     // .when('/:hubname/details',
@@ -77,6 +81,14 @@ angular.module('app').config(function($routeProvider, $locationProvider){
     .when('/:hubname/update',
       {
         templateUrl: '/partials/hub/hub-update',
+        controller: 'mvMainHubCtrl',
+        resolve: routeRoleChecks.signedin
+
+      }
+    )
+    .when('/:hubname/delete',
+      {
+        templateUrl: '/partials/hub/hub-delete',
         controller: 'mvMainHubCtrl',
         resolve: routeRoleChecks.signedin
       }

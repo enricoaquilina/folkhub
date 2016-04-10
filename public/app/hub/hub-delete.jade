@@ -1,0 +1,27 @@
+.container
+  .well
+    form.form-horizontal(name="hubdeleteForm")
+      fieldset Are you sure you want to delete 
+        label {{hubname}} ?
+      table.table
+        tr
+          td
+            label Hub Name
+          td
+            .form-group
+              label {{hubname}}
+        tr
+          td
+            label Description
+          td
+            .form-group
+              label {{description}}
+        tr
+          td
+            label Picture
+          td
+            .form-group
+              input.form-control(placeholder="Password", data-icon="false" type="file" ng-model="picture")        
+      button.btn.btn-primary(ng-click="deleteHub()" ng-disabled="hubdeleteForm.$invalid") Delete
+      | &nbsp;
+      a.btn.btn-default(href="/{{creator}}/hubs") Cancel

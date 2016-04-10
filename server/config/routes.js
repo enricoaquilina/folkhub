@@ -16,7 +16,9 @@ module.exports = function(app){
   app.get('/api/hubs/:username', hubs.getUserHubs);
   app.post('/getHubDetails', hubs.getHubDetails);
   app.post('/api/hubs', hubs.createHub);
-  app.put('/api/hubs/:hubname', hubs.updateHub);
+  // app.put('/api/hubs/:hubname', hubs.updateHub);
+  app.delete('/api/hubs/', hubs.deleteHub);
+  app.put('/api/hubs/', hubs.updateHub);
 
   app.get('/partials/*', function(req, res){
     res.render('../../public/app/' + req.params[0]);
