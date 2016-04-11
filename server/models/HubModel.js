@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 var Hub = mongoose.Schema({
   hubname: {type:String, unique: true},
-  description: {type:String, unique:true},
+  description: {type:String},
   picture: {type: String},
   helpers: [String],
   creator: {type:String},

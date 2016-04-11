@@ -2,12 +2,13 @@ angular.module('app').controller('mvHubCreationCtrl', function($scope, $location
 
   $scope.createHub = function() {
     var hubData = {
-      hubname: $scope.name,
+      hubname: $scope.name.toLowerCase(),
       description: $scope.description,
       picture: $scope.picture,
       helpers: $scope.helpers,
       creator: Identity.currentuser.username
     }
+
     Hub.createHub(hubData)
       .then(function(){
         Notifier.success('You have created a new hub!');

@@ -21,7 +21,6 @@ exports.getHubDetails = function(req, res, next){
 
 exports.createHub = function(req, res, next){
   var newHub = req.body;
-
   HubModel.create(newHub, function(err, newHub){
     if(err) {
       if(err.toString().indexOf('E11000') > -1){
