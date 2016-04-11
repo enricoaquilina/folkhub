@@ -1,9 +1,11 @@
-angular.module('app').factory('Identity', function($window, UserRsc){
+angular.module('app').factory('Identity', function($window, UserRsc, HubRsc){
   var currentuser;
   var currenthub;
-  
+
   if($window.bootstrappedUserObject){
     currentuser = new UserRsc();
+    currenthub = new HubRsc();
+
     angular.extend(currentuser, $window.bootstrappedUserObject);
   }
   return{

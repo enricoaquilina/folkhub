@@ -28,15 +28,14 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
   }
   $scope.deleteHub = function(){
     Hub.delete(Identity.currenthub)
-    .then(function(success){
-      if(success){
+    .then(function(){
         $scope.hubname = "";
         $scope.description = "";
         $scope.helpers = "";
 
         Notifier.success('You have successfully deleted the hub!');
         $location.path('/' + Identity.currentuser.username + '/hubs');
-      }
+
     })
   }
 })
