@@ -21,7 +21,6 @@ angular.module('app').factory('Hub', function($q, $routeParams, $http, HubRsc, I
         angular.extend(hub, hubData);
 
         Identity.currenthub = hub;
-        console.log(Identity.currenthub);
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);
@@ -30,14 +29,7 @@ angular.module('app').factory('Hub', function($q, $routeParams, $http, HubRsc, I
     },
     delete: function(hubData){
       var dfd = $q.defer();
-
-      // $http.post('/deletehub', { hub : hubData })
-      //   .then(function(){
-      //   Identity.currenthub = undefined;
-      //   dfd.resolve(true);
-      // });
-      // return dfd.promise;
-
+      
       var clone = angular.copy(Identity.currenthub);
       angular.extend(clone, hubData);
 
@@ -53,6 +45,7 @@ angular.module('app').factory('Hub', function($q, $routeParams, $http, HubRsc, I
       var dfd = $q.defer();
       $http.post('/getHubDetails', { hubname: hubname})
       .then(function(response){
+
         if(response.data.success &&
            response.data.hub.creator === Identity.currentuser.username){
           var hub = new HubRsc(response.data.hub);

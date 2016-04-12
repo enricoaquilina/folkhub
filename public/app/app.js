@@ -71,19 +71,18 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         controller: 'mvUserHubsCtrl'
       }
     )
-    // .when('/:hubname/details',
-    //   {
-    //     templateUrl: '/partials/hub/hub-details',
-    //     controller: 'mvMainHubCtrl',
-    //     resolve: routeRoleChecks.signedin
-    //   }
-    // )
+    .when('/:hubname/details',
+      {
+        templateUrl: '/partials/hub/hub-details',
+        controller: 'mvMainHubCtrl',
+        resolve: routeRoleChecks.signedin
+      }
+    )
     .when('/:hubname/update',
       {
         templateUrl: '/partials/hub/hub-update',
         controller: 'mvMainHubCtrl',
         resolve: routeRoleChecks.signedin
-
       }
     )
     .when('/:hubname/delete',

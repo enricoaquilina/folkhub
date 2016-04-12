@@ -2,12 +2,14 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
   Hub.getHubDetails($routeParams.hubname)
   .then(function(success){
     if(success){
-      $scope.hubname = Identity.currenthub.hubname;
-      $scope.description = Identity.currenthub.description;
+      var d = new Date(Identity.currenthub.datecreated);
+      $scope.created = d.getDate() + '-' + (d.getMonth()+1) + '-' + d.getFullYear();
       $scope.creator = Identity.currenthub.creator;
+      $scope.description = Identity.currenthub.description;
       $scope.helpers = Identity.currenthub.helpers;
+      $scope.hubname = Identity.currenthub.hubname;
     }else{
-      Notifier.error('Are you sure you\'re the owner of the hub?');
+      Notifier.error('That hub doesn\'t exist yet!');
       $location.path('/');
     }
   });

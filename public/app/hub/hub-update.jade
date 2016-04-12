@@ -7,16 +7,13 @@
           td
             label Hub Name
           td
-            //- .form-group
-              //- input.form-control(type="text" ng-model="hubname")
-            label 
-              {{hubname}}
+            label {{hubname}}
         tr
           td
             label Description
           td
             .form-group
-              input.form-control(placeholder="Describe your hub", type="text" ng-model="description")
+              input.form-control(placeholder="Describe your hub", type="textarea" ng-model="description")
         tr
           td
             label Picture

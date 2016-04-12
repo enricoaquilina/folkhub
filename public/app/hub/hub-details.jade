@@ -1,0 +1,35 @@
+.container
+  .well
+    form.form-horizontal(name="hubcreateForm")
+      fieldset Hub details
+      table.table
+        tr
+          td
+            label Hub Name
+          td
+            .form-group {{hubname}}
+        tr
+          td
+            label Description
+          td
+            .form-group {{description}}
+        tr
+          td 
+            label Date created
+          td
+            .form-group {{created}}
+
+        //- tr
+        //-   td
+        //-     label Picture
+        //-   td
+        //-     .form-group
+                  //- img.hubimage(src={{picture}}, alt={{hubname}}, title={{hubname}})
+        tr
+          td
+            label Keywords
+          td
+            .form-group {{helpers}}        
+      a.btn.btn-default.test(href="/{{creator}}/hubs") Back
+      a.btn.btn-warning.test(href="/{{hubname}}/update") Update
+      a.btn.btn-danger.test(href="/{{hubname}}/delete") Delete

@@ -13,13 +13,16 @@
         label Helpers
       td
       td
+      td
     tr(ng-repeat="hub in myhubs")
       td {{ hub.hubname }}
       td {{ hub.description }}
       td {{ hub.picture }}
       td {{ hub.helpers }}
+      td
+        a.btn.btn-default(href="/{{hub.hubname}}/details") Details
       td 
-        a.btn.btn-default(href="/{{hub.hubname}}/update") Update
+        a.btn.btn-warning(href="/{{hub.hubname}}/update") Update
       td 
         a.btn.btn-danger(href="/{{hub.hubname}}/delete") Delete
 

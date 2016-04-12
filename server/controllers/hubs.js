@@ -13,10 +13,17 @@ exports.getUserHubs = function(req, res, next){
 }
 
 exports.getHubDetails = function(req, res, next){
-  HubModel.findOne({ hubname: req.body.hubname}).exec(function(err, hub){
+  var hubData = req.body;
+  HubModel.findOne({ hubname: hubData.hubname}).exec(function(err, hub){
     if(err) {return next(err);}
-    res.send({success:true, hub:hub});
-  })
+    var found = false;
+
+    if(hub){
+      found = true;
+    }
+
+    res.send({success:found, hub:hub});
+  });
 }
 
 exports.createHub = function(req, res, next){
@@ -43,7 +50,7 @@ exports.deleteHub = function(req, res, next){
   // HubModel.findOne({ id: hubData._id }).remove().exec();
   HubModel.findOne({ id: hubData._id }, function (err, hub) {
     if (err) {
-        res.status(400);
+      res.status(400);
     }
     hub.remove(function (err) {
       if(err){
