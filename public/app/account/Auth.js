@@ -1,4 +1,4 @@
-angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc){
+angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc, Info){
   return {
     authenticate: function(username, password){
       var dfd = $q.defer();
@@ -51,8 +51,21 @@ angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc){
       angular.extend(clone, userData);
 
       clone.$update().then(function(){
-
         Identity.currentuser = clone;
+        dfd.resolve();
+      }, function(response){
+        dfd.reject(response.data.reason);
+      });
+      return dfd.promise;
+    },
+    adminUpdate: function(userData){
+      var dfd = $q.defer();
+
+      var clone = angular.copy(Info.currentuser);
+      angular.extend(clone, userData);
+
+      clone.$update().then(function(){
+        Info.currentuser = clone;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);
@@ -68,6 +81,20 @@ angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc){
       }, function(response){
         dfd.reject(response.data.reason);
       });
+      return dfd.promise;
+    },
+    getUserDetails: function(username){
+      var dfd = $q.defer();
+      $http.post('/getUserDetails', {username: username})
+      .then(function(response){
+        if(response.data.success){
+          var user = new UserRsc(response.data.user);
+          Info.currentuser = user;
+          dfd.resolve(true);
+        }else{
+          dfd.resolve(false);
+        }
+      })
       return dfd.promise;
     }
   }

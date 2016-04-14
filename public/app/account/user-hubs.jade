@@ -12,18 +12,12 @@
       td
         label Helpers
       td
-        label Creator
-      td
-      td
-    tr(ng-repeat="hub in hubs")
+        label Date of creation
+    tr(ng-repeat="hub in userhubs")
       td {{ hub.hubname }}
       td {{ hub.description }}
       td {{ hub.picture }}
       td {{ hub.helpers }}
-      td {{ hub.creator }}
-      td 
-        a.btn.btn-default(href="/{{hub.hubname}}/update-hub") Update
-      td 
-        a.btn.btn-danger(href="/{{hub.hubname}}/delete") Delete
-        
+      td {{ hub.datecreated}}
+
         

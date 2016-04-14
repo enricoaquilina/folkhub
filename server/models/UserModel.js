@@ -4,11 +4,12 @@ var mongoose = require('mongoose'),
 var userSchema = mongoose.Schema({
   username: {type: String, unique: true},
   email: {type: String, unique: true},
+  hashed_pwd: String,
   firstname: {type: String},//required: 'The last name is required!'}
   lastname: {type: String},//required: 'The last name is required!'}
   salt: String,
-  hashed_pwd: String,
-  roles: [String]
+  roles: [String],
+  datecreated: {type: Date, default:Date.now}
 });
 
 userSchema.methods = {

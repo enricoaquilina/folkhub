@@ -1,0 +1,37 @@
+.container
+  .well
+    form.form-horizontal(ng-hide="identity.isAuthorized('admin')" name="adminUserUpdateForm")
+      fieldset You can update a user's details here
+      table.table
+        tr
+          td
+            label Username
+          td
+            label {{username}}
+        tr
+          td
+            label Email
+          td
+            .form-group
+              input.form-control(placeholder="Email", type="text" ng-model="email")
+        tr
+          td
+            label Password
+          td
+            .form-group
+              input.form-control(placeholder="Password", type="password" ng-model="password") 
+        tr
+          td
+            label First name
+          td
+            .form-group
+              input.form-control(placeholder="First name", type="text" ng-model="firstname")   
+        tr
+          td
+            label Last name
+          td
+            .form-group
+              input.form-control(placeholder="Last name", type="text" ng-model="lastname")          
+      button.btn.btn-primary(ng-click="update()" ng-disabled="adminUserUpdateForm.$invalid") Update
+      | &nbsp;
+      a.btn.btn-default(href="/admin/users") Cancel

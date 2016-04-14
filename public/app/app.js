@@ -59,16 +59,11 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         controller: 'mvHubsCtrl'
       }
     )
-    // .when('/:hubname',
-    //   {
-    //     templateUrl: '/partials/hub/hub',
-    //     controller: 'mvMainHubCtrl'
-    //   }
-    // )
-    .when('/:username/hubs',
+    .when('/:hubname/update-hub',
       {
-        templateUrl: '/partials/hub/user-hubs',
-        controller: 'mvUserHubsCtrl'
+        templateUrl: '/partials/admin/update-hub',
+        controller: 'mvHubsCtrl',
+        resolve: routeRoleChecks.admin
       }
     )
     .when('/:hubname/details',
@@ -92,6 +87,34 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         resolve: routeRoleChecks.signedin
       }
     )
+    // .when('/:hubname',
+    //   {
+    //     templateUrl: '/partials/hub/hub',
+    //     controller: 'mvMainHubCtrl'
+    //   }
+    // )
+    .when('/:username/hubs',
+      {
+        templateUrl: '/partials/hub/user-hubs',
+        controller: 'mvUserHubsCtrl',
+        resolve: routeRoleChecks.signedin
+      }
+    )
+    .when('/:username/all-hubs',
+      {
+        templateUrl: '/partials/account/user-hubs',
+        controller: 'mvUserHubsViewCtrl',
+        resolve: routeRoleChecks.signedin
+      }
+    )
+    .when('/:username/update-user',
+      {
+        templateUrl: '/partials/admin/update-user',
+        controller: 'mvUsersCtrl',
+        resolve: routeRoleChecks.admin
+      }
+    )
+
     .when('/profile',
       {
         templateUrl: '/partials/account/profile',

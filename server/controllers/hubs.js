@@ -68,7 +68,7 @@ exports.updateHub = function(req, res, next){
     res.status(403);
     return res.end();
   }
-  HubModel.findOneAndUpdate({hubname: hubData.hubname}, hubData, function (err, hub) {
+  HubModel.findOneAndUpdate({_id: hubData._id}, hubData, function (err, hub) {
     if(err){
       if(err.toString().indexOf('E11000') > -1){
         err = new Error('There already is a hub with the same name!');

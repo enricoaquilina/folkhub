@@ -9,7 +9,6 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
       $scope.helpers = Identity.currenthub.helpers;
       $scope.hubname = Identity.currenthub.hubname;
     }else{
-      Notifier.error('That hub doesn\'t exist yet!');
       $location.path('/');
     }
   });

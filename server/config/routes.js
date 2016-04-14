@@ -6,10 +6,12 @@ var auth = require('./auth'),
 
 module.exports = function(app){
   //this will look in the public/app directory and process the files as jade templates
+  // app.get('/admin/users', users)
 
   app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
   app.post('/api/users', users.createUser);
   app.put('/api/users', users.updateUser);
+  app.post('/getUserDetails', users.getUserDetails);
 
   app.get('/api/hubs', hubs.getHubs);
   //  auth.requiresRole('admin'),

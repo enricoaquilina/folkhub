@@ -2,7 +2,8 @@ var UserModel = require('mongoose').model('User'),
       encrypt = require('../common/crypto/encrypt');
 
 exports.getUsers = function(req, res){
-  UserModel.find({}).exec(function(err, collection){
+  UserModel.find({ username: { $ne: req.user.username } })
+  .exec(function(err, collection){
     res.send(collection);
   });
 }
@@ -42,21 +43,51 @@ exports.updateUser = function(req, res){
     res.status(403);
     return res.end();
   }
-  req.user.firstname = userData.firstname;
-  req.user.lastname = userData.lastname;
-  req.user.email = userData.email;
-  req.user.username = userData.username;
 
-  if(userData.password && userData.password.length > 0){
-    req.user.salt = encrypt.createSalt();
-    req.user.hashed_pwd = encrypt.hashPwd(req.user.salt, userData.password);
+  if(userData._id == req.user._id){
+          console.log('haq alla');
+      req.user.firstname = userData.firstname;
+      req.user.lastname = userData.lastname;
+      req.user.email = userData.email;
+      req.user.username = userData.username;
+
+      if(userData.password && userData.password.length > 0){
+        req.user.salt = encrypt.createSalt();
+        req.user.hashed_pwd = encrypt.hashPwd(req.user.salt, userData.password);
+      }
+      req.user.save(function(err){
+        if(err){
+          res.status(400);
+
+          return res.send({reason:err.toString()});
+        }
+        res.send(req.user);
+      });
+  }else if(req.user.hasRole('admin') &&
+            userData._id != req.user._id){
+      UserModel.findOneAndUpdate({_id: userData._id}, userData, function (err, user) {
+        if(err){
+          if(err.toString().indexOf('E11000') > -1){
+            err = new Error('There already is a userin the system!');
+          }
+          res.status(400);
+          return res.send({reason:err.toString()});
+        }
+        res.send(user);
+      });
   }
-  req.user.save(function(err){
-    if(err){
-      res.status(400);
+}
 
-      return res.send({reason:err.toString()});
+exports.getUserDetails = function(req, res, next){
+  var userData = req.body;
+  UserModel.findOne({ username: userData.username}).exec(function(err, user){
+    if(err) {return next(err);}
+    var found = false;
+
+    if(user){
+      found = true;
     }
-    res.send(req.user);
+
+    res.send({success:found, user:user});
   });
-};
+}

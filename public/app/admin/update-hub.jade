@@ -1,0 +1,31 @@
+.container
+  .well
+    form.form-horizontal(name="hubupdateForm")
+      fieldset Create a hub
+      table.table
+        tr
+          td
+            label Hub Name
+          td
+            label(ng-model="hubname")
+        tr
+          td
+            label Description
+          td
+            .form-group
+              input.form-control(placeholder="Describe your hub", type="text" ng-model="description")
+        tr
+          td
+            label Picture
+          td
+            .form-group
+              input.form-control(placeholder="Password", data-icon="false" type="file" ng-model="picture")        
+        tr
+          td
+            label Keywords
+          td
+            .form-group
+              input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="helpers")        
+      button.btn.btn-primary(ng-click="update()" ng-disabled="hubupdateForm.$invalid") Build your hub!
+      | &nbsp;
+      a.btn.btn-default(href="/admin/hubs") Cancel
