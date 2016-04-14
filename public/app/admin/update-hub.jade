@@ -7,7 +7,7 @@
           td
             label Hub Name
           td
-            label(ng-model="hubname")
+            label {{hubname}}
         tr
           td
             label Description
@@ -26,6 +26,6 @@
           td
             .form-group
               input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="helpers")        
-      button.btn.btn-primary(ng-click="update()" ng-disabled="hubupdateForm.$invalid") Build your hub!
+      button.btn.btn-primary(ng-click="update()" ng-disabled="hubupdateForm.$invalid") Save
       | &nbsp;
       a.btn.btn-default(href="/admin/hubs") Cancel

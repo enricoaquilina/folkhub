@@ -10,11 +10,14 @@ angular.module('app').controller('mvHubsCtrl', function($scope, $routeParams, $l
       $scope.description = Identity.currenthub.description;
       $scope.helpers = Identity.currenthub.helpers;
       $scope.hubname = Identity.currenthub.hubname;
+      $scope._id = Identity.currenthub._id;
     }
   });
 
   $scope.update = function(){
     var hubdata = {
+      _id: $scope._id,
+      hubname: $scope.hubname,
       description: $scope.description,
       picture: $scope.picture,
       keywords: $scope.keywords,

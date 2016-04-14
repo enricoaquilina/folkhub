@@ -15,14 +15,12 @@ angular.module('app').factory('Hub', function($q, $routeParams, Auth, $http, Hub
 
       var clone = angular.copy(Identity.currenthub);
       angular.extend(clone, hubData);
-      console.log('here');
       console.log(clone);
-      return false;
       clone.$update().then(function(){
         var hub = new HubRsc();
         angular.extend(hub, hubData);
 
-        // Identity.currenthub = hub;
+        Identity.currenthub = hub;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);
@@ -50,10 +48,12 @@ angular.module('app').factory('Hub', function($q, $routeParams, Auth, $http, Hub
       var dfd = $q.defer();
       $http.post('/getHubDetails', { hubname: hubname})
       .then(function(response){
-
+        console.log('test');
+        console.log(response);
         if(response.data.success &&
           ((response.data.hub.creator === Identity.currentuser.username) ||
           (Identity.isAuthorized('admin')))){
+
           var hub = new HubRsc(response.data.hub);
           Identity.currenthub = hub;
           dfd.resolve(true);
