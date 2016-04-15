@@ -45,7 +45,6 @@ exports.updateUser = function(req, res){
   }
 
   if(userData._id == req.user._id){
-          console.log('haq alla');
       req.user.firstname = userData.firstname;
       req.user.lastname = userData.lastname;
       req.user.email = userData.email;

@@ -23,6 +23,7 @@ module.exports = function(app, config){
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
+
   app.use(session({
     secret: 'best app on the internets!',
     resave: false,

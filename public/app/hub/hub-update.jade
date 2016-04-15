@@ -28,4 +28,4 @@
               input.form-control(placeholder="Enter tags to help in finding your hub (Optional)", type="text" ng-model="helpers")        
       button.btn.btn-primary(ng-click="updateHub()" ng-disabled="hubupdateForm.$invalid") Update
       | &nbsp;
-      a.btn.btn-default(href="/{{creator}}/hubs") Cancel
+      a.btn.btn-default(href="/{{identity.currentuser.username}}/hubs") Cancel

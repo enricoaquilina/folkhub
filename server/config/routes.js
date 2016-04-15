@@ -13,13 +13,11 @@ module.exports = function(app){
   app.put('/api/users', users.updateUser);
   app.post('/getUserDetails', users.getUserDetails);
 
-  app.get('/api/hubs', hubs.getHubs);
-  //  auth.requiresRole('admin'),
+  app.get('/api/hubs', auth.requiresRole('admin'), hubs.getHubs);
   app.get('/api/hubs/:username', hubs.getUserHubs);
   app.post('/getHubDetails', hubs.getHubDetails);
   app.post('/api/hubs', hubs.createHub);
-  // app.put('/api/hubs/:hubname', hubs.updateHub);
-  app.delete('/api/hubs/', hubs.deleteHub);
+  app.delete('/api/hubs/:id', hubs.deleteHub);
   app.put('/api/hubs/', hubs.updateHub);
 
   app.get('/partials/*', function(req, res){

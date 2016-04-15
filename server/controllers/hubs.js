@@ -41,20 +41,21 @@ exports.createHub = function(req, res, next){
 }
 
 exports.deleteHub = function(req, res, next){
-  var hubData = req.body;
 
-  if(hubData._id != req.user._id && !req.user.hasRole('admin')){
-    res.status(403);
-    return res.end();
-  }
-  // HubModel.findOne({ id: hubData._id }).remove().exec();
-  HubModel.findOne({ id: hubData._id }, function (err, hub) {
+  HubModel.findOne({ _id: req.params.id }, function (err, hub) {
     if (err) {
       res.status(400);
+      return res.end();
     }
+    if(hub.creator != req.user.username && !req.user.hasRole('admin')){
+      res.status(403);
+      return res.end();
+    }
+
     hub.remove(function (err) {
       if(err){
         res.status(400);
+        return res.end();
       }
       res.send(true);
     });
@@ -64,10 +65,15 @@ exports.deleteHub = function(req, res, next){
 exports.updateHub = function(req, res, next){
   var hubData = req.body;
 
-  if(hubData._id != req.user._id && !req.user.hasRole('admin')){
+  console.log(hubData);
+  return false;
+
+  if(hubData.creator != req.user.username &&
+     !req.user.hasRole('admin')){
     res.status(403);
     return res.end();
   }
+
   HubModel.findOneAndUpdate({_id: hubData._id}, hubData, function (err, hub) {
     if(err){
       if(err.toString().indexOf('E11000') > -1){
