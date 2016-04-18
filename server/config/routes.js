@@ -12,9 +12,11 @@ module.exports = function(app){
   app.post('/api/users', users.createUser);
   app.put('/api/users', users.updateUser);
   app.post('/getUserDetails', users.getUserDetails);
+  app.delete('/api/users/:id', users.deleteUser);
 
-  app.get('/api/hubs', auth.requiresRole('admin'), hubs.getHubs);
-  app.get('/api/hubs/:username', hubs.getUserHubs);
+  app.get('/api/hubs', hubs.getHubs);
+  // auth.requiresRole('admin'),
+  app.get('/api/hubs/:username', auth.apiLogin, hubs.getUserHubs);
   app.post('/getHubDetails', hubs.getHubDetails);
   app.post('/api/hubs', hubs.createHub);
   app.delete('/api/hubs/:id', hubs.deleteHub);

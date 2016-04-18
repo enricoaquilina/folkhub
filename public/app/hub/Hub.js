@@ -29,14 +29,12 @@ angular.module('app').factory('Hub', function($q, $routeParams, Auth, $http, Hub
     },
     delete: function(hubData){
       var dfd = $q.defer();
-      var clone = new HubRsc(hubData)
-      console.log(clone);
-      clone.$delete().then(function(){
-        Identity.currenthub = undefined;
-        dfd.resolve();
-      }, function(response){
-        dfd.reject(response.data.reason);
-      });
+      HubRsc.delete({_id: hubData._id}, function(hub){
+          dfd.resolve();
+        },function(){
+          dfd.reject('Unable to delete hub');
+        });
+
       return dfd.promise;
     },
     getHubDetails: function(hubname){

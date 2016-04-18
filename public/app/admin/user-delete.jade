@@ -1,0 +1,27 @@
+.container
+  .well
+    form.form-horizontal(name="userdeleteForm")
+      fieldset Are you sure you want to delete 
+        label {{username}} ?
+      table.table
+        tr
+          td
+            label Username
+          td
+            .form-group
+              label {{username}}
+        tr
+          td
+            label First Name
+          td
+            .form-group
+              label {{firstname}}
+        tr
+          td
+            label Last Name
+          td
+            .form-group
+              label {{lastname}}       
+      button.btn.btn-primary(ng-click="deleteUser()" ng-disabled="userdeleteForm.$invalid") Delete
+      | &nbsp;
+      a.btn.btn-default(href="/admin/users") Cancel

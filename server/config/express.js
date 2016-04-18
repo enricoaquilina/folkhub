@@ -19,7 +19,7 @@ module.exports = function(app, config){
   //this is saying that when a request comes in requesting the public directory
   //go ahead and serve the file.
   app.use(express.static(config.rootPath + '/public'));
-  //app.use(logger('dev'));
+  app.use(logger('dev'));
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());

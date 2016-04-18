@@ -31,15 +31,21 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
     })
   }
   $scope.deleteHub = function(){
-    HubRsc.delete({_id: Identity.currenthub._id});
-    // Hub.delete(Identity.currenthub)
+    // HubRsc.delete({_id: Identity.currenthub._id})
     // .then(function(){
-    //     $scope.hubname = "";
-    //     $scope.description = "";
-    //     $scope.helpers = "";
-    //
-    //     Notifier.success('You have successfully deleted the hub!');
-    //     $location.path('/' + Identity.currentuser.username + '/hubs');
-    // })
+    //   Notifier.success('Hub was deleted successfully!');
+    //   $location.path('/');
+    // }, function(reason){
+    //   Notifier.error(reason);
+    // });
+    Hub.delete(Identity.currenthub)
+    .then(function(){
+        $scope.hubname = "";
+        $scope.description = "";
+        $scope.helpers = "";
+
+        Notifier.success('You have successfully deleted the hub!');
+        $location.path('/' + Identity.currentuser.username + '/hubs');
+    })
   }
 })

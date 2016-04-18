@@ -41,6 +41,7 @@ exports.createHub = function(req, res, next){
 }
 
 exports.deleteHub = function(req, res, next){
+  var hubData = req.body;
 
   HubModel.findOne({ _id: req.params.id }, function (err, hub) {
     if (err) {
@@ -64,9 +65,6 @@ exports.deleteHub = function(req, res, next){
 
 exports.updateHub = function(req, res, next){
   var hubData = req.body;
-
-  console.log(hubData);
-  return false;
 
   if(hubData.creator != req.user.username &&
      !req.user.hasRole('admin')){

@@ -76,7 +76,28 @@ exports.updateUser = function(req, res){
       });
   }
 }
+exports.deleteUser = function(req, res, next){
+  var userData = req.body;
 
+  UserModel.findOne({ _id: req.params.id }, function (err, user) {
+    if (err) {
+      res.status(400);
+      return res.end();
+    }
+    if(userData.creator != req.user.username && !req.user.hasRole('admin')){
+      res.status(403);
+      return res.end();
+    }
+
+    user.remove(function (err) {
+      if(err){
+        res.status(400);
+        return res.end();
+      }
+      res.send(true);
+    });
+  });
+}
 exports.getUserDetails = function(req, res, next){
   var userData = req.body;
   UserModel.findOne({ username: userData.username}).exec(function(err, user){

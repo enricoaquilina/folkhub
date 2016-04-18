@@ -20,7 +20,7 @@ angular.module('app').controller('mvHubsCtrl', function($scope, $routeParams, $l
       hubname: $scope.hubname,
       description: $scope.description,
       picture: $scope.picture,
-      keywords: $scope.keywords,
+      helpers: $scope.helpers,
     }
     Hub.update(hubdata)
     .then(function(){

@@ -114,7 +114,13 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         resolve: routeRoleChecks.admin
       }
     )
-
+    .when('/:username/delete-user',
+      {
+        templateUrl: '/partials/admin/user-delete',
+        controller: 'mvUsersCtrl',
+        resolve: routeRoleChecks.admin
+      }
+    )
     .when('/profile',
       {
         templateUrl: '/partials/account/profile',

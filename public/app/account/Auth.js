@@ -58,6 +58,16 @@ angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc, Inf
       });
       return dfd.promise;
     },
+    delete: function(userData){
+      var dfd = $q.defer();
+      UserRsc.delete({id: userData}, function(user){
+          dfd.resolve();
+        },function(){
+          dfd.reject('Unable to delete user');
+        });
+
+      return dfd.promise;
+    },
     adminUpdate: function(userData){
       var dfd = $q.defer();
 

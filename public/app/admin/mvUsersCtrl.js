@@ -5,6 +5,7 @@ angular.module('app').controller('mvUsersCtrl', function($scope, $location, $rou
   Auth.getUserDetails($routeParams.username)
   .then(function(success){
     if(success){
+      $scope._id = Info.currentuser._id;
       $scope.email = Info.currentuser.email;
       $scope.firstname = Info.currentuser.firstname;
       $scope.lastname = Info.currentuser.lastname;
@@ -25,6 +26,17 @@ angular.module('app').controller('mvUsersCtrl', function($scope, $location, $rou
       $location.path('/'+userData.username+'/update-user');
     }, function(reason){
       Notifier.error(reason);
+    })
+  }
+  $scope.deleteUser = function(){
+    Auth.delete($scope._id)
+    .then(function(){
+        $scope.hubname = "";
+        $scope.description = "";
+        $scope.helpers = "";
+
+        Notifier.success('You have successfully deleted the user!');
+        $location.path('/admin/hubs');
     })
   }
 });
