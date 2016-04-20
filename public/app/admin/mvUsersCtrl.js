@@ -36,7 +36,7 @@ angular.module('app').controller('mvUsersCtrl', function($scope, $location, $rou
         $scope.helpers = "";
 
         Notifier.success('You have successfully deleted the user!');
-        $location.path('/admin/hubs');
+        $location.path('/admin/users');
     })
   }
 });
