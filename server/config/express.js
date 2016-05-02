@@ -5,26 +5,43 @@ var server = require('http').createServer(),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    RedisStore = require('connect-redis')(session),
+    client = require('redis').createClient(),
     passport = require('passport'),
     url = require('url'),
     WebSocketServer = require('ws').Server;
 
-module.exports = function(app, config){
+module.exports = function(app, config, req, res, next){
   //compile function for stylus which gets used by the middleware
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var wss = new WebSocketServer({server: app, path:'/', port:5001});
+  var clients = [];
+  var wss = new WebSocketServer({server: app,  port:5001});
 
   wss.on('connection', function connection(ws){
     // var location = url.parse(ws.upgradeReq.url, true);
-    console.log('here');
-    console.log(ws);
     ws.on('message', function incoming(message){
-      console.log('received', message);
+      // console.log('received', message);
+      ws.broadcast(message);
     });
-    ws.send('something');
-  })
+    ws.on('close', function(){
+      console.log('client disconnected');
+    });
+    ws.broadcast = function broadcast(data){
+      clients.forEach(function each(client){
+        // console.log(data);
+        client.send(data);
+      });
+    };
+    // var id = setInterval(function(){
+    //   ws.send(JSON.stringify(process.memoryUsage()), function(){
+    //
+    //   })
+    // }, 1500);
+    clients.push(ws);
+  });
+
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder
 
@@ -39,9 +56,15 @@ module.exports = function(app, config){
   app.use(bodyParser.json());
 
   app.use(session({
-    secret: 'best app on the internets!',
+    store: new RedisStore({
+      host: 'localhost',
+      port:6379,
+      client: client,
+      ttl: 260
+    }),
+    saveUninitialized: false,
     resave: false,
-    saveUninitialized: false
+    secret: 'best app on the internets!'
   }));
   app.use(passport.initialize());
   app.use(passport.session());

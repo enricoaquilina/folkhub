@@ -15,6 +15,8 @@ require('./server/config/passport')();
 
 require('./server/config/routes')(app);
 
+
+
 /*add a route which delivers the index page for all routes
 asterisk will match all routes which are not previously defined
 (kinda like the default in a switch statement)

@@ -27,6 +27,12 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         controller: 'mvMainCtrl'
       }
     )
+    .when('/science',
+      {
+        templateUrl: '/partials/folkhubs/science',
+        controller: 'mvSocketCtrl'
+      }
+    )
     // .when('/:hubname',
     //   {
     //     templateUrl: '/partials/hub/hub',

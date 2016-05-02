@@ -9,7 +9,7 @@ exports.authenticate = function(req, res, next){
     if(!user) { res.send({success:false})}
 
     //tell passport to login users and create a session
-    //normally you dont tell passport to login the user, but sincce we're using xhr we have to
+    //normally you dont tell passport to login the user, but since we're using xhr we have to
     //do it like this
     req.logIn(user, function(err){
       if(err) {return next(err);}
