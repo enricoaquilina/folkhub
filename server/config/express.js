@@ -6,7 +6,6 @@ var server = require('http').createServer(),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     RedisStore = require('connect-redis')(session),
-    client = require('redis').createClient(),
     passport = require('passport'),
     url = require('url'),
     WebSocketServer = require('ws').Server;
@@ -15,6 +14,15 @@ module.exports = function(app, config, req, res, next){
   //compile function for stylus which gets used by the middleware
   function compile(str, path){
     return stylus(str).set('filename', path);
+  }
+  var client;
+  if (process.env.REDISTOGO_URL) {
+    var rtg = require("url").parse(process.env.REDISTOGO_URL);
+    var redis = require("redis").createClient(rtg.port, rtg.hostname);
+
+    redis.auth(rtg.auth.split(":")[1]);
+  } else {
+    client = require("redis").createClient();
   }
   var clients = [];
   var wss = new WebSocketServer({server: app,  port:5001});
@@ -57,8 +65,8 @@ module.exports = function(app, config, req, res, next){
 
   app.use(session({
     store: new RedisStore({
-      host: 'localhost',
-      port:6379,
+      host: '127.0.0.1',
+      port: 6379,
       client: client,
       ttl: 260
     }),
