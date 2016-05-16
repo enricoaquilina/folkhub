@@ -7,13 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "5.8.x",
-    "npm": "3.7.x"
+    "node": "5.11.x",
+    "npm": "3.8.x"
   },
   "author": "Enrico Aquilina",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
