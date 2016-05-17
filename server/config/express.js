@@ -20,8 +20,8 @@ module.exports = function(app, config, req, res, next){
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
-    host = rtg.host;
-    port = rtg.port;
+    host = 'redis://redistogo:259f1461c09a2d34e2e11855aabaf16a@cod.redistogo.com:9334';
+    port = '9334';
     redisSession = redis.createClient(host, port);
 
     redis.auth(rtg.auth.split(":")[1]);
