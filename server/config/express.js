@@ -22,10 +22,10 @@ module.exports = function(app, config, req, res, next){
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
     host = 'redis://redistogo:259f1461c09a2d34e2e11855aabaf16a@cod.redistogo.com:9334';
     port = '9334';
-    redisSession = redis.createClient(host, port);
+    redisSession = redis.createClient(rtg.host, rtg.port);
 
-    redis.auth('259f1461c09a2d34e2e11855aabaf16a');
-      // rtg.auth.split(":")[1]);
+    redis.auth(rtg.auth.split(":")[1]);
+      // '259f1461c09a2d34e2e11855aabaf16a';
   } else {
     redisSession = redis.createClient();
     host = '127.0.0.1';
