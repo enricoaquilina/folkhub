@@ -6,7 +6,7 @@ var server = require('http').createServer(),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     RedisStore = require('connect-redis')(session),
-    redis = require('redis-client'),
+    redis = require('redis'),
     passport = require('passport'),
     url = require('url'),
     WebSocketServer = require('ws').Server;
@@ -16,17 +16,22 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var publisher;
-  // if (process.env.REDISTOGO_URL) {
-  //   var rtg = require("url").parse(process.env.REDISTOGO_URL);
-  //   var redis = require("redis").createClient(rtg.port, rtg.hostname);
-  //
-  //   redis.auth(rtg.auth.split(":")[1]);
-  // } else {
-  publisher = require("redis").createClient();
-  var client2 = require("redis").createClient();
-  // }
+  var redisSession, host, port;
 
+  if (process.env.REDISTOGO_URL) {
+    var rtg = require("url").parse(process.env.REDISTOGO_URL);
+    host = rtg.host;
+    port = rtg.port;
+    redisSession = redis.createClient(host, port);
+
+    redis.auth(rtg.auth.split(":")[1]);
+  } else {
+    redisSession = redis.createClient();
+    host = '127.0.0.1';
+    port = '6379';
+    var client2 = redis.createClient();
+  }
+  var publisher = redis.createClient();
   publisher.subscribe('test');
   publisher.on('message', function(channel, message){
     console.log('received '+message);
@@ -70,23 +75,23 @@ module.exports = function(app, config, req, res, next){
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
 
-  // app.use(session({
-  //   store: new RedisStore({
-  //     host: '127.0.0.1',
-  //     port: 6379,
-  //     client: client2,
-  //     ttl: 260
-  //   }),
-  //   saveUninitialized: false,
-  //   resave: false,
-  //   secret: 'best app on the internets!'
-  // }));
   app.use(session({
-    secret: 'keyboard cat',
+    store: new RedisStore({
+      host: host,
+      port: port,
+      client: client2,
+      ttl: 260
+    }),
+    saveUninitialized: false,
     resave: false,
-    saveUninitialized: true,
-    cookie: {secure: true}
-  }))
+    secret: 'best app on the internets!'
+  }));
+  // app.use(session({
+  //   secret: 'keyboard cat',
+  //   resave: false,
+  //   saveUninitialized: true,
+  //   // cookie: {secure: true}
+  // }))
   app.use(passport.initialize());
   app.use(passport.session());
 
