@@ -33,6 +33,7 @@ module.exports = function(app, config, req, res, next){
     // redis.auth('df3994bfcc3f703ee6a216c5ffa28cf0');
   } else {
     redisSession = redis.createClient();
+    console.log('test..');
     host = '127.0.0.1';
     port = '6379';
     var client2 = redis.createClient();
