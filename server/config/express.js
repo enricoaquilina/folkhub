@@ -16,7 +16,7 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port;
+  var redisSession, host, port, publisher;
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
@@ -29,6 +29,7 @@ module.exports = function(app, config, req, res, next){
 
     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
     redisSession = require("redis").createClient(rtg.port, rtg.hostname);
+    publisher = redis.createClient(rtg.port, rtg.hostname);
 
     redisSession.auth(rtg.auth.split(":")[1]);
 
@@ -38,37 +39,37 @@ module.exports = function(app, config, req, res, next){
     host = '127.0.0.1';
     port = '6379';
     var client2 = redis.createClient();
+    publisher = redis.createClient(port, host);
   }
-  // var publisher = redis.createClient();
-  // publisher.subscribe('test');
-  // publisher.on('message', function(channel, message){
-  //   console.log('received '+message);
-  // })
-  // var clients = [];
-  // var wss = new WebSocketServer({server: app,  port:5001});
-  //
-  // wss.on('connection', function connection(ws){
-  //   // var location = url.parse(ws.upgradeReq.url, true);
-  //   ws.on('message', function incoming(message){
-  //     // console.log('received', message);
-  //     ws.broadcast(message);
-  //   });
-  //   ws.on('close', function(){
-  //     console.log('client disconnected');
-  //   });
-  //   ws.broadcast = function broadcast(data){
-  //     clients.forEach(function each(client){
-  //       // console.log(data);
-  //       client.send(data);
-  //     });
-  //   };
-  //   // var id = setInterval(function(){
-  //   //   ws.send(JSON.stringify(process.memoryUsage()), function(){
-  //   //
-  //   //   })
-  //   // }, 1500);
-  //   clients.push(ws);
-  // });
+  publisher.subscribe('test');
+  publisher.on('message', function(channel, message){
+    console.log('received '+message);
+  })
+  var clients = [];
+  var wss = new WebSocketServer({server: app,  port:5001});
+
+  wss.on('connection', function connection(ws){
+    // var location = url.parse(ws.upgradeReq.url, true);
+    ws.on('message', function incoming(message){
+      // console.log('received', message);
+      ws.broadcast(message);
+    });
+    ws.on('close', function(){
+      console.log('client disconnected');
+    });
+    ws.broadcast = function broadcast(data){
+      clients.forEach(function each(client){
+        // console.log(data);
+        client.send(data);
+      });
+    };
+    // var id = setInterval(function(){
+    //   ws.send(JSON.stringify(process.memoryUsage()), function(){
+    //
+    //   })
+    // }, 1500);
+    clients.push(ws);
+  });
 
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder
