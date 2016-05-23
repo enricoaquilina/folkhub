@@ -27,9 +27,9 @@ module.exports = function(app, config, req, res, next){
     console.log(rtg.host);
     console.log(rtg.port);
 
-    redisSession = redis.createClient(host, port);
+    redisSession = redis.createClient("redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@hoki.redistogo.com", 9741);
 
-    console.log(rtg.auth.split(":")[1]);
+    // console.log(rtg.auth.split(":")[1]);
     // redis.auth('df3994bfcc3f703ee6a216c5ffa28cf0');
   } else {
     redisSession = redis.createClient();
