@@ -20,15 +20,11 @@ module.exports = function(app, config, req, res, next){
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
-    host = 'redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@hoki.redistogo.com:9741/';
     console.log(rtg.host);
     console.log(rtg.port);
-    port = '9741';
-    redisSession = redis.createClient(rtg.host, rtg.port);
-
-    redis.auth('df3994bfcc3f703ee6a216c5ffa28cf0');
-      // rtg.auth.split(":")[1]
-      // '259f1461c09a2d34e2e11855aabaf16a';
+    redisSession = redis.createClient(rtg.port, rtg.port);
+    console.log(rtg.auth.split(":")[1]);
+    // redis.auth('df3994bfcc3f703ee6a216c5ffa28cf0');
   } else {
     redisSession = redis.createClient();
     host = '127.0.0.1';
