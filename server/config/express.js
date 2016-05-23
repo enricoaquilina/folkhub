@@ -27,7 +27,7 @@ module.exports = function(app, config, req, res, next){
     console.log(rtg.host);
     console.log(rtg.port);
 
-    redisSession = redis.createClient(rtg.host, rtg.port);
+    redisSession = redis.createClient("//"+rtg.host, rtg.port);
 
     // console.log(rtg.auth.split(":")[1]);
     redis.auth(rtg.auth.split(":")[1]);
