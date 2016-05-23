@@ -27,13 +27,14 @@ module.exports = function(app, config, req, res, next){
     console.log(rtg.hostname);
     console.log(rtg.port);
 
-    redisSession = redis.createClient(rtg.port, rtg.hostname);
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+    redisSession = require("redis").createClient(rtg.port, rtg.hostname);
 
-    // console.log(rtg.auth.split(":")[1]);
-    redis.auth(rtg.auth.split(":")[1]);
+    redisSession.auth(rtg.auth.split(":")[1]);
+
   } else {
     redisSession = redis.createClient();
-    console.log('test..');
+    console.log('using local redis session');
     host = '127.0.0.1';
     port = '6379';
     var client2 = redis.createClient();
