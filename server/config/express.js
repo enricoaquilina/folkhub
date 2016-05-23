@@ -83,23 +83,24 @@ module.exports = function(app, config, req, res, next){
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
 
-  app.use(session({
-    store: new RedisStore({
-      host: host,
-      port: port,
-      client: client2,
-      ttl: 260
-    }),
-    saveUninitialized: false,
-    resave: false,
-    secret: 'best app on the internets!'
-  }));
   // app.use(session({
-  //   secret: 'keyboard cat',
+  //   store: new RedisStore({
+  //     host: host,
+  //     port: port,
+  //     client: client2,
+  //     ttl: 260
+  //   }
+  // ),
+  //   saveUninitialized: false,
   //   resave: false,
-  //   saveUninitialized: true,
-  //   // cookie: {secure: true}
-  // }))
+  //   secret: 'best app on the internets!'
+  // }));
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: {secure: true}
+  }))
   app.use(passport.initialize());
   app.use(passport.session());
 
