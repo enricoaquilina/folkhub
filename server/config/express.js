@@ -22,7 +22,7 @@ module.exports = function(app, config, req, res, next){
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
     console.log(rtg.host);
     console.log(rtg.port);
-    redisSession = redis.createClient(rtg.port, rtg.port);
+    redisSession = redis.createClient(rtg.host, rtg.port);
     console.log(rtg.auth.split(":")[1]);
     // redis.auth('df3994bfcc3f703ee6a216c5ffa28cf0');
   } else {
