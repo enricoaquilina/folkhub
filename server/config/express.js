@@ -39,36 +39,36 @@ module.exports = function(app, config, req, res, next){
     port = '6379';
     var client2 = redis.createClient();
   }
-  var publisher = redis.createClient();
-  publisher.subscribe('test');
-  publisher.on('message', function(channel, message){
-    console.log('received '+message);
-  })
-  var clients = [];
-  var wss = new WebSocketServer({server: app,  port:5001});
-
-  wss.on('connection', function connection(ws){
-    // var location = url.parse(ws.upgradeReq.url, true);
-    ws.on('message', function incoming(message){
-      // console.log('received', message);
-      ws.broadcast(message);
-    });
-    ws.on('close', function(){
-      console.log('client disconnected');
-    });
-    ws.broadcast = function broadcast(data){
-      clients.forEach(function each(client){
-        // console.log(data);
-        client.send(data);
-      });
-    };
-    // var id = setInterval(function(){
-    //   ws.send(JSON.stringify(process.memoryUsage()), function(){
-    //
-    //   })
-    // }, 1500);
-    clients.push(ws);
-  });
+  // var publisher = redis.createClient();
+  // publisher.subscribe('test');
+  // publisher.on('message', function(channel, message){
+  //   console.log('received '+message);
+  // })
+  // var clients = [];
+  // var wss = new WebSocketServer({server: app,  port:5001});
+  //
+  // wss.on('connection', function connection(ws){
+  //   // var location = url.parse(ws.upgradeReq.url, true);
+  //   ws.on('message', function incoming(message){
+  //     // console.log('received', message);
+  //     ws.broadcast(message);
+  //   });
+  //   ws.on('close', function(){
+  //     console.log('client disconnected');
+  //   });
+  //   ws.broadcast = function broadcast(data){
+  //     clients.forEach(function each(client){
+  //       // console.log(data);
+  //       client.send(data);
+  //     });
+  //   };
+  //   // var id = setInterval(function(){
+  //   //   ws.send(JSON.stringify(process.memoryUsage()), function(){
+  //   //
+  //   //   })
+  //   // }, 1500);
+  //   clients.push(ws);
+  // });
 
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder
@@ -83,24 +83,24 @@ module.exports = function(app, config, req, res, next){
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
 
-  // app.use(session({
-  //   store: new RedisStore({
-  //     host: host,
-  //     port: port,
-  //     client: client2,
-  //     ttl: 260
-  //   }
-  // ),
-  //   saveUninitialized: false,
-  //   resave: false,
-  //   secret: 'best app on the internets!'
-  // }));
   app.use(session({
-    secret: 'keyboard cat',
+    store: new RedisStore({
+      host: host,
+      port: port,
+      client: client2,
+      ttl: 260
+    }
+  ),
+    saveUninitialized: false,
     resave: false,
-    saveUninitialized: true,
-    // cookie: {secure: true}
-  }))
+    secret: 'best app on the internets!'
+  }));
+  // app.use(session({
+  //   secret: 'keyboard cat',
+  //   resave: false,
+  //   saveUninitialized: true,
+  //   // cookie: {secure: true}
+  // }))
   app.use(passport.initialize());
   app.use(passport.session());
 
