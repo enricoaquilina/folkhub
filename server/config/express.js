@@ -24,10 +24,10 @@ module.exports = function(app, config, req, res, next){
     host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
     host = rtg.port;
 
-    console.log(rtg.host);
+    console.log(rtg.hostname);
     console.log(rtg.port);
 
-    redisSession = redis.createClient("//"+rtg.host, rtg.port);
+    redisSession = redis.createClient(rtg.port, rtg.hostname);
 
     // console.log(rtg.auth.split(":")[1]);
     redis.auth(rtg.auth.split(":")[1]);
