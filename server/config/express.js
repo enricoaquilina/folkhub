@@ -30,7 +30,7 @@ module.exports = function(app, config, req, res, next){
 
 
     // redisSession.auth(rtg.auth.split(":")[1]);
-    subscriber.auth(redis_url.auth.split(":")[1]);
+    subscriber = require('redis').createClient(redis_url.port, redis_url.hostname, {auth_pass: redis_url.auth.split(":")[1]});
     // client2.auth(rtg.auth.split(":")[1]);
   } else {
     redisSession = redis.createClient();
