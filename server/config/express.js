@@ -32,7 +32,7 @@ module.exports = function(app, config, req, res, next){
     redisSession = require("redis").createClient(rtg.port, rtg.hostname);
     redisSession.auth(rtg.auth.split(":")[1]);
 
-    // subscriber.auth(pass);
+    subscriber.auth(pass);
   } else {
     redisSession = redis.createClient();
     host = '127.0.0.1';
