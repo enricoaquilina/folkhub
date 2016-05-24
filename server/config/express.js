@@ -21,11 +21,9 @@ module.exports = function(app, config, req, res, next){
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
 
-    host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
-    host = rtg.port;
-
-    console.log(rtg.hostname);
-    console.log(rtg.port);
+    // host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
+    host = rtg.hostname;
+    port = rtg.port;
 
     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
     redisSession = require("redis").createClient(rtg.port, rtg.hostname);
