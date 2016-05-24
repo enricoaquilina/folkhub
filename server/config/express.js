@@ -21,15 +21,15 @@ module.exports = function(app, config, req, res, next){
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
 
-    host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
-    // host = rtg.hostname;
+    // host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
+    host = rtg.hostname;
     port = rtg.port;
 
     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-    redisSession = require("redis").createClient(rtg.port, rtg.hostname);
+    // redisSession = require("redis").createClient(rtg.port, rtg.hostname);
     subscriber = redis.createClient(rtg.port, rtg.hostname);
 
-    redisSession.auth(rtg.auth.split(":")[1]);
+    // redisSession.auth(rtg.auth.split(":")[1]);
     subscriber.auth(rtg.auth.split(":")[1]);
   } else {
     redisSession = redis.createClient();
