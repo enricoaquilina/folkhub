@@ -16,7 +16,7 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port, publisher;
+  var redisSession, host, port, publisher,redisClient1;
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
@@ -25,19 +25,21 @@ module.exports = function(app, config, req, res, next){
     host = rtg.hostname;
     port = rtg.port;
 
-    redisSession = require("redis").createClient(rtg.port, rtg.hostname);
-    subscriber = redis.createClient(rtg.port, rtg.hostname);
+    var redis_url = require('url').parse(process.env.REDISTOGO_URL)
+    redisClient1 = require('redis').createClient(redis_url.port, redis_url.hostname, {auth_pass: redis_url.auth.split(":")[1]});
 
-    redisSession.auth(rtg.auth.split(":")[1]);
+
+    // redisSession.auth(rtg.auth.split(":")[1]);
     subscriber.auth(rtg.auth.split(":")[1]);
+    // client2.auth(rtg.auth.split(":")[1]);
+
   } else {
     redisSession = redis.createClient();
     host = '127.0.0.1';
     port = '6379';
     subscriber = redis.createClient(port, host);
   }
-  var client2 = redis.createClient(port, host);
-
+  // var client2 = redis.createClient(port, host);
   subscriber.subscribe('test');
   subscriber.on('message', function(channel, message){
     console.log('received '+message);
@@ -85,7 +87,7 @@ module.exports = function(app, config, req, res, next){
     store: new RedisStore({
       host: host,
       port: port,
-      client: redisSession,
+      client: client2,
       ttl: 260
     }
   ),
