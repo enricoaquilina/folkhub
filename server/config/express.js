@@ -16,7 +16,7 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port, publisher,redisClient1;
+  var redisSession, host, port, publisher,redisClient1, subscriber;
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
@@ -37,9 +37,9 @@ module.exports = function(app, config, req, res, next){
     redisSession = redis.createClient();
     host = '127.0.0.1';
     port = '6379';
-    subscriber = redis.createClient(port, host);
+    subscriber = redis.createClient();
   }
-  // var client2 = redis.createClient(port, host);
+
   subscriber.subscribe('test');
   subscriber.on('message', function(channel, message){
     console.log('received '+message);
