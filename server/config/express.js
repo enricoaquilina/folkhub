@@ -21,8 +21,8 @@ module.exports = function(app, config, req, res, next){
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
 
-    // host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
-    host = rtg.hostname;
+    host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
+    // host = rtg.hostname;
     port = rtg.port;
 
     var rtg   = require("url").parse(process.env.REDISTOGO_URL);
@@ -36,9 +36,10 @@ module.exports = function(app, config, req, res, next){
     console.log('using local redis session');
     host = '127.0.0.1';
     port = '6379';
-    var client2 = redis.createClient(port, host);
     subscriber = redis.createClient(port, host);
   }
+  var client2 = redis.createClient(port, host);
+
   subscriber.subscribe('test');
   subscriber.on('message', function(channel, message){
     console.log('received '+message);
