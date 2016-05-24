@@ -16,21 +16,23 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port, publisher;
+  var redisSession, host, port, db, pass, publisher;
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
+    subscriber = redis.createClient(rtg.port, rtg.hostname);
+    var redisAuth = rtg.auth.split(":");
 
     // host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
     host = rtg.hostname;
     port = rtg.port;
+    db = redisAuth[0];
+    pass = redisAuth[1];
 
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
     // redisSession = require("redis").createClient(rtg.port, rtg.hostname);
-    subscriber = redis.createClient(rtg.port, rtg.hostname);
-
     // redisSession.auth(rtg.auth.split(":")[1]);
-    subscriber.auth(rtg.auth.split(":")[1]);
+
+    subscriber.auth(pass);
   } else {
     redisSession = redis.createClient();
     host = '127.0.0.1';
@@ -82,10 +84,15 @@ module.exports = function(app, config, req, res, next){
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
 
+
+
+
   app.use(session({
     store: new RedisStore({
       host: host,
       port: port,
+      db: db,
+      pass: pass,
       client: client2,
       ttl: 260
     }
