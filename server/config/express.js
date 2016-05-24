@@ -83,9 +83,9 @@ module.exports = function(app, config, req, res, next){
 
   app.use(session({
     store: new RedisStore({
-      host: host,
-      port: port,
-      client: client2,
+      // host: host,
+      // port: port,
+      client: redisSession,
       ttl: 260
     }
   ),
