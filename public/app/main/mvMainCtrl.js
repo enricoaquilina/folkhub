@@ -2,7 +2,8 @@ angular.module('app').controller('mvMainCtrl', function($scope){
   $scope.myVar = "Hello from Angular!";
 
   var host = location.origin
-              .replace(/^http/, 'ws');
+              .replace(/^http/, 'ws')
+              .replace('5000','5001');
 
   var ws = new WebSocket(host);
   ws.onopen = function(event) {

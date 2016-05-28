@@ -1,4 +1,4 @@
-var server = require('http').createServer(),
+var http = require('http'),
     express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
@@ -17,6 +17,7 @@ module.exports = function(app, config, req, res, next){
     return stylus(str).set('filename', path);
   }
   var redisSession, host, port, publisher,redisClient1, subscriber;
+  var server = http.createServer(app);
 
   if (process.env.REDISTOGO_URL) {
     var rtg = require("url").parse(process.env.REDISTOGO_URL);
@@ -44,7 +45,7 @@ module.exports = function(app, config, req, res, next){
     console.log('received '+message);
   })
   var clients = [];
-  var wss = new WebSocketServer({server: server});
+  var wss = new WebSocketServer({server: server,  port:5001});
 
   wss.on('connection', function conn(ws){
     // var location = url.parse(ws.upgradeReq.url, true);
