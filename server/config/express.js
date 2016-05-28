@@ -44,14 +44,13 @@ module.exports = function(app, config, req, res, next){
     console.log('received '+message);
   })
   var clients = [];
-  var wss = new WebSocketServer({server: server,  port:5001});
+  var wss = new WebSocketServer({server: server});
 
   wss.on('connection', function conn(ws){
     // var location = url.parse(ws.upgradeReq.url, true);
     console.log('websocket connection success');
 
     ws.on('message', function incoming(message){
-      console.log('broadcasting..');
       ws.broadcast(message);
     });
 
@@ -65,7 +64,6 @@ module.exports = function(app, config, req, res, next){
         client.send(data);
       });
     };
-
     clients.push(ws);
   });
 
