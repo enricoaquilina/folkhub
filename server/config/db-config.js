@@ -17,7 +17,7 @@ module.exports = function(app, config){
   app.listen(config.port, function(){
     console.log("App started on port " + config.port);
   });
-
+  app.timeout = 50000;
   User.createDefaultUsers();
   Hub.createDefaultHubs();
 }
