@@ -19,7 +19,7 @@ angular.module('app').controller('mvMainCtrl', function($scope){
     console.log(event.data);
   };
   ws.onerror = function(event) {
-    console.log(event.data);
+    console.log(event);
   };
 
 
