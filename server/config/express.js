@@ -39,7 +39,7 @@ module.exports = function(app, config, req, res, next){
     subscriber = redis.createClient();
   }
 
-  subscriber.subscribe('test');
+  // subscriber.subscribe('test');
   subscriber.on('message', function(channel, message){
     console.log('received '+message);
   })
@@ -47,7 +47,8 @@ module.exports = function(app, config, req, res, next){
   var wss = new WebSocketServer({server: app,  port:5001});
 
   wss.on('connection', function conn(ws){
-    // var location = url.parse(ws.upgradeReq.url, true);
+    var location = url.parse(ws.upgradeReq.url, true);
+
     console.log('websocket connection success');
 
     ws.on('message', function incoming(message){
