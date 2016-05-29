@@ -44,7 +44,35 @@ module.exports = function(app, config, req, res, next){
     console.log('received '+message);
   })
   var clients = [];
-  var wss = new WebSocketServer({server: app,  port:5001});
+  // app.listen(config.port, function(){
+  //   console.log("App started on port " + config.port);
+  // });
+
+
+  // console.log("http server listening on %d", config.port)
+
+
+
+  // server.on('request', app);
+  //set the views property to the path where im gonna hold my views
+  //since it's gonna be a SPA views have been put in server folder
+  app.set("views", config.rootPath + '/server/views');
+  app.set('view engine', 'jade');
+
+  //this is saying that when a request comes in requesting the public directory
+  //go ahead and serve the file.
+  app.use(express.static(config.rootPath + '/public'));
+  // app.use(logger('dev'));
+  app.use(cookieParser());
+  app.use(bodyParser.urlencoded({extended:true}));
+  app.use(bodyParser.json());
+
+  var server = http.createServer(app);
+  server.listen(config.port)
+  console.log('http server listening on %d', config.port);
+
+  var wss = new WebSocketServer({server: server});
+  console.log('websocket server created..');
 
   wss.on('connection', function conn(ws){
     var location = url.parse(ws.upgradeReq.url, true);
@@ -67,22 +95,6 @@ module.exports = function(app, config, req, res, next){
     };
     clients.push(ws);
   });
-
-  //set the views property to the path where im gonna hold my views
-  //since it's gonna be a SPA views have been put in server folder
-
-  app.set("views", config.rootPath + '/server/views');
-  app.set('view engine', 'jade');
-  // app.set('trust proxy', 1) // trust first proxy
-  app.enable('trust proxy')
-  app.set('transports', ['websocket'])
-  //this is saying that when a request comes in requesting the public directory
-  //go ahead and serve the file.
-  app.use(express.static(config.rootPath + '/public'));
-  // app.use(logger('dev'));
-  app.use(cookieParser());
-  app.use(bodyParser.urlencoded({extended:true}));
-  app.use(bodyParser.json());
 
   app.use(session({
     store: new RedisStore({

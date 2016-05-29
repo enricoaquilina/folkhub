@@ -15,6 +15,6 @@ module.exports = {
   production: {
     rootPath: rootPath,
     connString: "mongodb://profmouse:folkhub@ds011449.mlab.com:11449/folkhub",
-    port: process.env.PORT || 80
+    port: process.env.PORT || 5000
   }
 }
