@@ -4,9 +4,7 @@ angular.module('app').controller('mvMainCtrl', function($scope){
   var host = location.origin
               .replace(/^http/, 'ws')
               .replace('5000','5001');
-  host = host + ':5001';
 
-  console.log(host);
   var ws = new WebSocket(host);
   ws.onopen = function(event) {
     console.log("Connection established");
