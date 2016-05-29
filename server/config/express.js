@@ -72,6 +72,8 @@ module.exports = function(app, config, req, res, next){
 
   app.set("views", config.rootPath + '/server/views');
   app.set('view engine', 'jade');
+  app.set('trust proxy', 1) // trust first proxy
+  app.set('transports', 'websocket')
   //this is saying that when a request comes in requesting the public directory
   //go ahead and serve the file.
   app.use(express.static(config.rootPath + '/public'));
