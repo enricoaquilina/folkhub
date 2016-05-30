@@ -43,17 +43,11 @@ module.exports = function(app, config, req, res, next){
   subscriber.on('message', function(channel, message){
     console.log('received '+message);
   })
-  var clients = [];
+
   // app.listen(config.port, function(){
   //   console.log("App started on port " + config.port);
   // });
 
-
-  // console.log("http server listening on %d", config.port)
-
-
-
-  // server.on('request', app);
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder
   app.set("views", config.rootPath + '/server/views');
@@ -74,6 +68,7 @@ module.exports = function(app, config, req, res, next){
   var wss = new WebSocketServer({server: server});
   console.log('websocket server created..');
 
+  var clients = [];
   wss.on('connection', function conn(ws){
     var location = url.parse(ws.upgradeReq.url, true);
 
@@ -84,12 +79,18 @@ module.exports = function(app, config, req, res, next){
     });
 
     ws.on('close', function(){
+      var index = clients.indexOf(ws);
+      if(index > -1)
+      {
+        console.log(index);
+        clients.splice(index, 1);
+      }
+
       console.log('websocket closed');
     });
 
     ws.broadcast = function broadcast(data){
       clients.forEach(function each(client){
-        // console.log(data);
         client.send(data);
       });
     };
