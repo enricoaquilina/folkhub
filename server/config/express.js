@@ -94,6 +94,10 @@ module.exports = function(app, config, req, res, next){
         client.send(data);
       });
     };
+
+    setInterval(function interval() {
+      ws.send();
+    }, 10000);
     clients.push(ws);
   });
 
