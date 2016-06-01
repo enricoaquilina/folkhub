@@ -1,25 +1,22 @@
 .container
-  //- .jumbotron
-  //-   h1 FH
-  //-   p FolkHub is a hub where folks can hang out. We encourage you to discover the number of hubs available and share your knowledge with the community.
-  //- .row
-  //-   .col-md-6
-  //-     div(ng-include="'/partials/main/popular-hubs'")
-  //-   .col-md-6
-  //-     div(ng-include="'/partials/main/new-hubs'")
   .panel.panel-primary
-    .panel-heading.text-center History of messages
-
+    //- .panel-heading.text-center History of messages
+  .row
+    .col-md-8
+      div.messages(name="hubMessages")
+        ul
+          li(ng-repeat="msg in hubmessages") {{msg}}
+            
+    .col-md-4
+      div.users(name="users")
+        p.text-center Users currently in the hub
+        ul
+          li(ng-repeat="user in users") {{user}}
   .row
     .col-md-12
       //- .form-control
-      textarea.form-control(name="usermessageHistory" rows="10" cols="20" resize="none")
-
-  .row
-    .col-md-12
-      //- .form-control
-      input.form-control(placeholder="Your message here :)", type="text" ng-model="usermessage")
+      input.form-control(placeholder="Your message here :)", type="text" ng-model="message")
         
   .row
     .col-md-12
-      button.btn.btn-primary(ng-click="send()") Talk
+      button.btn.btn-primary(ng-click="send(message)") Talk

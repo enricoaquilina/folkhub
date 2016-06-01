@@ -73,6 +73,8 @@ module.exports = function(app, config, req, res, next){
     var location = url.parse(ws.upgradeReq.url, true);
 
     console.log('websocket connection success');
+    clients.push(ws);
+    console.log(clients.length+' clients in here!');
 
     ws.on('message', function incoming(message){
       ws.broadcast(message);
@@ -82,10 +84,8 @@ module.exports = function(app, config, req, res, next){
       var index = clients.indexOf(ws);
       if(index > -1)
       {
-        console.log(index);
         clients.splice(index, 1);
       }
-
       console.log('websocket closed');
     });
 
@@ -94,11 +94,12 @@ module.exports = function(app, config, req, res, next){
         client.send(data);
       });
     };
-
+    // ws.on("pong", function(data) { // we received a pong from the client.
+    //   console.log(data.toString());
+    // });
     setInterval(function interval() {
-      ws.send();
-    }, 10000);
-    clients.push(ws);
+      ws.ping('ping', {}, true);
+    }, 5000);
   });
 
   app.use(session({
