@@ -12,7 +12,7 @@ var express = require('express'),
 
 module.exports = function(app, config, req, res, next){
   //compile function for stylus which gets used by the middleware
-  console.log(process.env.REDISTOGO_URL);
+  // console.log(process.env.REDISTOGO_URL);
   function compile(str, path){
     return stylus(str).set('filename', path);
   }

@@ -1,6 +1,7 @@
 var redis = require('redis');
 
 var publisher, subscriber, host, port;
+console.log(process.env);
 if (process.env.REDISTOGO_URL) {
   var rtg = require("url").parse(process.env.REDISTOGO_URL);
   console.log('here');
