@@ -9,11 +9,14 @@ var config = require('./server/config/config')[env];
 
 require('./server/config/express')(app, config);
 
+require('./server/config/websocket')(app, config);
+
 require('./server/config/db-config')(app, config);
 
 require('./server/config/passport')();
 
 require('./server/config/routes')(app);
+
 
 
 
