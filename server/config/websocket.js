@@ -18,26 +18,26 @@ module.exports = function(app, config, test){
     console.log('websocket connection success');
     clients.push(ws);
     console.log(clients.length+' clients in here!');
-    var client = require('redis').createClient();
+    // var client = require('redis').createClient();
 
     ws.on('message', function incoming(message){
       if(message == 'connect'){
         // redisClients.subscriber.subscribe('test', function(channel, message){
         //   console.log('subscribed');
         // })
-        console.log(test);
-        test.subscribe('test');
+        // console.log(test);
+        // test.subscribe('test');
         // client.subscribe('test');
       }else{
         ws.broadcast(message);
       }
     });
 
-    client.on('message', function(channel, message){
-      //send message
-      console.log(message);
-      ws.send(message)
-    })
+    // client.on('message', function(channel, message){
+    //   //send message
+    //   console.log(message);
+    //   ws.send(message)
+    // })
 
     ws.on('close', function(){
       var index = clients.indexOf(ws);
