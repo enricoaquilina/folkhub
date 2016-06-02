@@ -21,16 +21,16 @@ module.exports = function(app, config, test){
     // var client = require('redis').createClient();
 
     ws.on('message', function incoming(message){
-      if(message == 'connect'){
+      // if(message == 'connect'){
         // redisClients.subscriber.subscribe('test', function(channel, message){
         //   console.log('subscribed');
         // })
         // console.log(test);
         // test.subscribe('test');
         // client.subscribe('test');
-      }else{
+      // }else{
         ws.broadcast(message);
-      }
+      // }
     });
 
     // client.on('message', function(channel, message){

@@ -12,11 +12,24 @@ var express = require('express'),
 
 module.exports = function(app, config, req, res, next){
   //compile function for stylus which gets used by the middleware
+  console.log(process.env.REDISTOGO_URL);
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisClient1;
+  var redisSession, host, port, publisher,redisClient1, subscriber;
 
+  if (process.env.REDISTOGO_URL) {
+    var rtg = require("url").parse(process.env.REDISTOGO_URL);
+
+    host = rtg.hostname;
+    port = rtg.port;
+  } else {
+    host = '127.0.0.1';
+    port = '6379';
+    subscriber = redis.createClient();
+  }
+
+  // subscriber.subscribe('');
   // subscriber.on('message', function(channel, message){
   //   //send message
   //   ws.send(message)
