@@ -7,9 +7,11 @@ var env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 var config = require('./server/config/config')[env];
 
-require('./server/config/express')(app, config);
+var test = require('./server/config/redisClients');
 
-require('./server/config/websocket')(app, config);
+require('./server/config/websocket')(app, config, test);
+
+require('./server/config/express')(app, config);
 
 require('./server/config/db-config')(app, config);
 

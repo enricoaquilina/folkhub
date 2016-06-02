@@ -10,7 +10,6 @@ module.exports = {
     rootPath: rootPath,
     connString: "mongodb://localhost/folkhub",
     port: process.env.PORT || 5000,
-    rtg: ''
   },
   production: {
     rootPath: rootPath,

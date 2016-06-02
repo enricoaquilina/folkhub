@@ -37,8 +37,10 @@ footer p {
 .messages {
   border: 1px solid #4D99B3;
   border-radius:15px;
-  min-height:100px;
+  min-height:350px;
   padding:10px;
+  max-height:350px;
+  overflow-y: scroll;
 }
   li{
     list-style-type: none;

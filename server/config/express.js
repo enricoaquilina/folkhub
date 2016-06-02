@@ -15,37 +15,12 @@ module.exports = function(app, config, req, res, next){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port, publisher,redisClient1, subscriber;
+  var redisClient1;
 
-  if (process.env.REDISTOGO_URL) {
-    var rtg = require("url").parse(process.env.REDISTOGO_URL);
-
-    // host = "redis://redistogo:df3994bfcc3f703ee6a216c5ffa28cf0@"+rtg.host;
-    host = rtg.hostname;
-    port = rtg.port;
-
-    var redis_url = require('url').parse(process.env.REDISTOGO_URL)
-    redisClient1 = require('redis').createClient(redis_url.port, redis_url.hostname, {auth_pass: redis_url.auth.split(":")[1]});
-
-
-    // redisSession.auth(rtg.auth.split(":")[1]);
-    subscriber = require('redis').createClient(redis_url.port, redis_url.hostname, {auth_pass: redis_url.auth.split(":")[1]});
-    // client2.auth(rtg.auth.split(":")[1]);
-  } else {
-    redisSession = redis.createClient();
-    host = '127.0.0.1';
-    port = '6379';
-    subscriber = redis.createClient();
-  }
-
-  // subscriber.subscribe('test');
-  subscriber.on('message', function(channel, message){
-    console.log('received '+message);
-  })
-
-  // app.listen(config.port, function(){
-  //   console.log("App started on port " + config.port);
-  // });
+  // subscriber.on('message', function(channel, message){
+  //   //send message
+  //   ws.send(message)
+  // })
 
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder
@@ -59,8 +34,6 @@ module.exports = function(app, config, req, res, next){
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended:true}));
   app.use(bodyParser.json());
-
-
 
   app.use(session({
     store: new RedisStore({

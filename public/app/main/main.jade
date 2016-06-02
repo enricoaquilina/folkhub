@@ -5,7 +5,7 @@
     .col-md-8
       div.messages(name="hubMessages")
         ul
-          li(ng-repeat="msg in hubmessages") {{msg}}
+          li(ng-repeat="msg in hubmessages track by $index") {{msg}}
             
     .col-md-4
       div.users(name="users")
