@@ -9,7 +9,7 @@ var config = require('./server/config/config')[env];
 
 var test = require('./server/config/redisClients');
 
-require('./server/config/websocket')(app, config, test);
+require('./server/config/websocket')(app, config);
 
 require('./server/config/express')(app, config);
 
