@@ -31,6 +31,7 @@ module.exports = {
   //   subscriber: subscriber
   // }
 
-  subscriber: require('redis').createClient()
+  subscriber: subscriber
+  // require('redis').createClient()
 
 }
