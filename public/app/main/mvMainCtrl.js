@@ -10,7 +10,6 @@ angular.module('app').controller('mvMainCtrl', function($scope){
 
   ws.onopen = function(event) {
     ws.send('Now talking in main hub!');
-    ws.send('connect');
   };
 
   $scope.send = function(message){
