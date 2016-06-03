@@ -2,7 +2,7 @@ var http = require('http'),
     url = require('url'),
     WebSocketServer = require('ws').Server;
 
-module.exports = function(app, config, test){
+module.exports = function(app, config, redisclients){
   var server = http.createServer(app);
   server.listen(config.port);
 
@@ -18,21 +18,19 @@ module.exports = function(app, config, test){
     console.log('websocket connection success');
     clients.push(ws);
     console.log(clients.length+' clients in here!');
-    test.subscriber.subscribe('test');
+    // redisclients.subscriber.subscribe('test');
+    redisclients.subscriber.subscribe('test');
+    // redisclients.publisher.publish('test', 'hiiii');
 
     ws.on('message', function incoming(message){
-      // if(message == 'connect'){
-        // redisClients.subscriber.subscribe('test', function(channel, message){
-        //   console.log('subscribed');
-        // })
-      // }else{
-        test.subscriber.subscribe('science');
+
+        // redisclients.subscriber.subscribe('test');
 
         ws.broadcast(message);
       // }
     });
 
-    test.subscriber.on('message', function(channel, message){
+    redisclients.subscriber.on('message', function(channel, message){
       ws.send(message)
     })
 
@@ -53,9 +51,10 @@ module.exports = function(app, config, test){
     // ws.on("pong", function(data) { // we received a pong from the client.
     //   console.log('reply to '+data.toString()+' with pong');
     // });
-    // setInterval(function interval() {
-    //   ws.ping('ping', {}, true);
-    // }, 5000);
+    setInterval(function interval() {
+      ws.ping('ping', {}, true);
+      redisclients.publisher.publish('test', 'testing the test publish interval');
+    }, 5000);
   });
 
 }
