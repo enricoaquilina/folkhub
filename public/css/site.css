@@ -26,8 +26,12 @@ footer p {
   right: 110px;
 }
 .users {
-  background-color: #C7E4ED;
-  min-height:100px;
+  border: 1px solid #C7E4ED;
+  border-color: #C7E4ED;
+  min-height:350px;
+  max-height:350px;
+  max-height:350px;
+  overflow-y: scroll;
   border-radius:15px;
 }
   li{
@@ -38,10 +42,16 @@ footer p {
   border: 1px solid #4D99B3;
   border-radius:15px;
   min-height:350px;
-  padding:10px;
   max-height:350px;
+  width:700px;
+  padding:10px;
   overflow-y: scroll;
 }
   li{
     list-style-type: none;
   }
+.userinput {
+  width:700px;
+  margin-top:10px;
+  margin-bottom:10px;
+}

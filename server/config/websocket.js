@@ -1,6 +1,7 @@
 var http = require('http'),
     url = require('url'),
-    WebSocketServer = require('ws').Server;
+    WebSocketServer = require('ws').Server,
+    clients = [];
 
 module.exports = function(app, config, redisclients){
   var server = http.createServer(app);
@@ -11,7 +12,6 @@ module.exports = function(app, config, redisclients){
   var wss = new WebSocketServer({server: server});
   console.log('websocket server created..');
 
-  var clients = [];
   wss.on('connection', function conn(ws){
     var location = url.parse(ws.upgradeReq.url, true);
 
@@ -23,9 +23,7 @@ module.exports = function(app, config, redisclients){
     // redisclients.publisher.publish('test', 'hiiii');
 
     ws.on('message', function incoming(message){
-
         // redisclients.subscriber.subscribe('test');
-
         ws.broadcast(message);
       // }
     });
@@ -51,10 +49,10 @@ module.exports = function(app, config, redisclients){
     // ws.on("pong", function(data) { // we received a pong from the client.
     //   console.log('reply to '+data.toString()+' with pong');
     // });
-    setInterval(function interval() {
-      ws.ping('ping', {}, true);
-      redisclients.publisher.publish('test', 'testing the test publish interval');
-    }, 5000);
+    // setInterval(function interval() {
+    //   ws.ping('ping', {}, true);
+    //   redisclients.publisher.publish('test', 'testing the test publish interval');
+    // }, 5000);
   });
 
 }

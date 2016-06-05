@@ -11,11 +11,6 @@ var Hub = mongoose.Schema({
   datecreated: {type:Date, default:Date.now}
 });
 
-Hub.methods = {
-  search: function(hubName){
-
-  }
-}
 var Hub = mongoose.model('Hub', Hub);
 
 exports.createDefaultHubs = function() {

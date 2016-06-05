@@ -15,7 +15,8 @@
       td
       td
     tr(ng-repeat="hub in myhubs")
-      td {{ hub.hubname }}
+      td 
+        a(href="/{{hub.hubname}}") {{ hub.hubname }}
       td {{ hub.description }}
       td {{ hub.picture }}
       td {{ hub.helpers }}

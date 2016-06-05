@@ -28,8 +28,4 @@ angular.module('app').controller('mvMainCtrl', function($scope){
     sys.debug(event);
     console.log(event);
   };
-  // $scope.$on('$locationChangeStart', function(event){
-  //   //disconnect here
-  //   console.log('disconnect');
-  // })
 });
