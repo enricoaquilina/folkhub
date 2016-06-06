@@ -9,7 +9,8 @@ angular.module('app').controller('mvMainCtrl', function($scope){
   var ws = new WebSocket(host);
 
   ws.onopen = function(event) {
-    ws.send('Now talking in main hub!');
+    // ws.send('Now talking in main hub!');
+    console.log('Now talking in main hub!');
   };
 
   $scope.send = function(message){
