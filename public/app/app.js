@@ -27,12 +27,6 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         controller: 'mvMainCtrl'
       }
     )
-    .when('/:hubname',
-      {
-        templateUrl: '/partials/main/main'
-        // controller: 'mvMainHubCtrl'
-      }
-    )
     .when('/admin/users',
       {
         templateUrl: '/partials/admin/user-list',
@@ -127,6 +121,12 @@ angular.module('app').config(function($routeProvider, $locationProvider){
         templateUrl: '/partials/account/profile',
         controller: 'mvProfileCtrl',
         resolve: routeRoleChecks.signedin
+      }
+    )
+    .when('/:hubname',
+      {
+        templateUrl: '/partials/main/main'
+        // controller: 'mvMainHubCtrl'
       }
     );
 });
