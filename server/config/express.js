@@ -48,8 +48,6 @@ module.exports = function(app, config, clients){
 
   app.use(session({
     store: new RedisStore({
-      // host: host,
-      // port: port,
       client: clients.sessionstore,
       ttl: 260
     }
@@ -58,12 +56,7 @@ module.exports = function(app, config, clients){
     resave: false,
     secret: 'best app on the internets!'
   }));
-  // app.use(session({
-  //   secret: 'keyboard cat',
-  //   resave: false,
-  //   saveUninitialized: true,
-  //   // cookie: {secure: true}
-  // }))
+
   app.use(passport.initialize());
   app.use(passport.session());
 
