@@ -11,7 +11,7 @@ var clients = require('./server/config/redisClients');
 
 require('./server/config/websocket')(app, config, clients);
 
-require('./server/config/express')(app, config);
+require('./server/config/express')(app, config, clients);
 
 require('./server/config/db-config')(app, config);
 

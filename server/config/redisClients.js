@@ -1,5 +1,5 @@
 var redis = require('redis');
-var publisher, subscriber, host, port;
+var publisher, subscriber, sessionstore, host, port;
 
 if (process.env.REDISTOGO_URL) {
   var rtg = require("url").parse(process.env.REDISTOGO_URL);
@@ -14,14 +14,20 @@ if (process.env.REDISTOGO_URL) {
     {
       auth_pass: rtg.auth.split(":")[1]
     });
+  sessionstore = redis.createClient(rtg.port, rtg.hostname,
+    {
+      auth_pass: rtg.auth.split(":")[1]
+    });
 } else {
   host = '127.0.0.1';
   port = '6379';
   publisher = redis.createClient();
   subscriber = redis.createClient();
+  sessionstore = redis.createClient();
 }
 
 module.exports = {
   subscriber: subscriber,
-  publisher: publisher
+  publisher: publisher,
+  sessionstore: sessionstore
 }

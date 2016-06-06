@@ -10,14 +10,12 @@ var express = require('express'),
     url = require('url'),
     WebSocketServer = require('ws').Server;
 
-module.exports = function(app, config, req, res, next){
+module.exports = function(app, config, clients){
   //compile function for stylus which gets used by the middleware
-  // console.log(process.env.REDISTOGO_URL);
+
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  var redisSession, host, port, publisher,redisClient1, subscriber;
-
   // if (process.env.REDISTOGO_URL) {
   //   var rtg = require("url").parse(process.env.REDISTOGO_URL);
   //
@@ -52,7 +50,7 @@ module.exports = function(app, config, req, res, next){
     store: new RedisStore({
       // host: host,
       // port: port,
-      client: redisClient1,
+      client: clients.sessionstore,
       ttl: 260
     }
   ),
