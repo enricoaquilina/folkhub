@@ -92,7 +92,7 @@ angular.module('app').config(function($routeProvider, $locationProvider){
       {
         templateUrl: '/partials/hub/user-hubs',
         controller: 'mvUserHubsCtrl',
-        resolve: routeRoleChecks.signedin
+        // resolve: routeRoleChecks.signedin
       }
     )
     .when('/:username/all-hubs',
