@@ -18,6 +18,9 @@ module.exports = function(app, config, redisclients){
 
     ws.on('message', function incoming(message){
         ws.broadcast(message);
+        //on receiving hub and message
+        //broadcast to hub
+        //broadcast('hub', 'msg')
     });
 
     redisclients.subscriber.on('message', function(channel, message){
