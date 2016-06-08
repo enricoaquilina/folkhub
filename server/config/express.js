@@ -10,6 +10,8 @@ var express = require('express'),
     url = require('url'),
     http = require('http');
 
+var server = null;
+
 module.exports = function(app, config, clients){
   //compile function for stylus which gets used by the middleware
 
@@ -54,4 +56,5 @@ module.exports = function(app, config, clients){
   // app.listen(config.port, function(){
   //     console.log("App started on port " + config.port);
   // });
+
 }
