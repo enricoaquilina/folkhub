@@ -1,4 +1,6 @@
-var HubModel = require('mongoose').model('Hub');
+var HubModel = require('mongoose').model('Hub'),
+    HubUser
+    config = require('../config/config');
 
 exports.getHubs = function(req, res, next){
   HubModel.find({}).exec(function(err, collection){
@@ -39,7 +41,26 @@ exports.createHub = function(req, res, next){
     res.send(newHub);
   })
 }
+exports.createHubUser = function(req, res, next){
+  var hubuser = req.body;
+  // hubuser.userconnection =
+  var loc = config[process.env.NODE_ENV].ws;
 
+  var l = loc.upgradeReq.url;
+  console.log(l);
+
+  // console.log(hubuser);
+  // HubModel.create(newHub, function(err, newHub){
+  //   if(err) {
+  //     if(err.toString().indexOf('E11000') > -1){
+  //       err = new Error('There already is a hub with the same name');
+  //     }
+  //     res.status(400);
+  //     res.send({reason:err.toString()});
+  //   }
+  //   res.send(newHub);
+  // })
+}
 exports.deleteHub = function(req, res, next){
   var hubData = req.body;
 

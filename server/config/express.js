@@ -16,22 +16,6 @@ module.exports = function(app, config, clients){
   function compile(str, path){
     return stylus(str).set('filename', path);
   }
-  // if (process.env.REDISTOGO_URL) {
-  //   var rtg = require("url").parse(process.env.REDISTOGO_URL);
-  //
-  //   host = rtg.hostname;
-  //   port = rtg.port;
-  // } else {
-  //   host = '127.0.0.1';
-  //   port = '6379';
-  //   subscriber = redis.createClient();
-  // }
-
-  // subscriber.subscribe('');
-  // subscriber.on('message', function(channel, message){
-  //   //send message
-  //   ws.send(message)
-  // })
 
   //set the views property to the path where im gonna hold my views
   //since it's gonna be a SPA views have been put in server folder

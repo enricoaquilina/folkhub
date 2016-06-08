@@ -8,28 +8,27 @@ module.exports = function(app, config, redisclients){
   server.listen(config.port);
 
   console.log('http server listening on %d', config.port);
-
   var wss = new WebSocketServer({server: server});
   console.log('websocket server created..');
 
   wss.on('connection', function conn(ws){
-    var location = url.parse(ws.upgradeReq.url, true);
+    // var location = url.parse(ws.upgradeReq.url, true);
+    // console.log(ws.upgradeReq.headers['sec-websocket-key']);
+
+    clients.push(ws);
+    redisclients.subscriber.subscribe('test');
+    config.ws = ws;
+
 
     console.log('websocket connection success');
-    clients.push(ws);
-    console.log(clients.length+' clients in here!');
-    // redisclients.subscriber.subscribe('test');
-    redisclients.subscriber.subscribe('test');
-    // redisclients.publisher.publish('test', 'hiiii');
+    console.log(clients.length + ' clients in here!');
 
     ws.on('message', function incoming(message){
-        // redisclients.subscriber.subscribe('test');
         ws.broadcast(message);
-      // }
     });
 
     redisclients.subscriber.on('message', function(channel, message){
-      ws.send(message)
+      ws.send(message);
     })
 
     ws.on('close', function(){
@@ -38,7 +37,7 @@ module.exports = function(app, config, redisclients){
       {
         clients.splice(index, 1);
       }
-      console.log('websocket closed');
+      console.log('websocket closed: '+clients.length);
     });
 
     ws.broadcast = function broadcast(message){
@@ -54,5 +53,4 @@ module.exports = function(app, config, redisclients){
     //   redisclients.publisher.publish('test', 'testing the test publish interval');
     // }, 5000);
   });
-
 }

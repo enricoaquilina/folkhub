@@ -1,5 +1,6 @@
-angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams, $location, HubRsc, Identity, Notifier, Hub){
+angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams, $location, Identity, Notifier, Hub, HubUser){
   $scope.identity = Identity;
+
   Hub.getHubDetails($routeParams.hubname)
   .then(function(success){
     if(success){
@@ -31,13 +32,6 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
     })
   }
   $scope.deleteHub = function(){
-    // HubRsc.delete({_id: Identity.currenthub._id})
-    // .then(function(){
-    //   Notifier.success('Hub was deleted successfully!');
-    //   $location.path('/');
-    // }, function(reason){
-    //   Notifier.error(reason);
-    // });
     Hub.delete(Identity.currenthub)
     .then(function(){
         $scope.hubname = "";
@@ -47,5 +41,18 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
         Notifier.success('You have successfully deleted the hub!');
         $location.path('/' + Identity.currentuser.username + '/hubs');
     })
+  }
+  $scope.subscribe = function(){
+    var hubuser = {
+      hubname: Identity.currenthub.hubname
+    }
+    HubUser.create(hubuser)
+      .then(function(){
+        Notifier.success('You have subscribed to the hub!');
+        $location.path('/');
+      }, function(reason){
+        Notifier.error(reason);
+      })
+
   }
 })

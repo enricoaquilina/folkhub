@@ -7,8 +7,4 @@ var messageSchema = mongoose.Schema({
   parenthubid: { type: Schema.Types.ObjectId, ref: 'Hub' }
 });
 
-messageSchema.methods = {
-  search: function(hubName){
-  }
-}
 var Message = mongoose.model('Message', messageSchema);

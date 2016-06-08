@@ -33,6 +33,8 @@ module.exports = function(app){
   app.delete('/api/hubs/:id', hubs.deleteHub);
   app.put('/api/hubs/', hubs.updateHub);
 
+  app.post('/api/hubusers', hubs.createHubUser);
+
   app.get('/partials/*', function(req, res){
     res.render('../../public/app/' + req.params[0]);
   });

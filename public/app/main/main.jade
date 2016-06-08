@@ -14,7 +14,7 @@
           li(ng-repeat="user in users") {{user}}
     
     .col-md-1
-      a.btn.btn-danger(ng-click="subscribe()") Subscribe
+      a.btn.btn-danger(ng-show="identity.isAuthenticated()" ng-click="subscribe()") Subscribe
       
   .row
     .col-md-12

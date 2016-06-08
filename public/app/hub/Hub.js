@@ -41,9 +41,8 @@ angular.module('app').factory('Hub', function($q, $routeParams, Auth, $http, Hub
       var dfd = $q.defer();
       $http.post('/getHubDetails', { hubname: hubname})
       .then(function(response){
-        if(response.data.success &&
-          ((response.data.hub.creator === Identity.currentuser.username) ||
-          (Identity.isAuthorized('admin')))){
+        if(response.data.success ||
+          (Identity.isAuthorized('admin'))){
 
           var hub = new HubRsc(response.data.hub);
           Identity.currenthub = hub;

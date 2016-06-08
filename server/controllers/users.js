@@ -1,10 +1,11 @@
 var UserModel = require('mongoose').model('User'),
-      encrypt = require('../common/crypto/encrypt');
+    encrypt = require('../common/crypto/encrypt');
 
 exports.getUsers = function(req, res){
   UserModel.find({ username: { $ne: req.user.username } })
   .exec(function(err, collection){
     res.send(collection);
+
   });
 }
 
@@ -67,7 +68,7 @@ exports.updateUser = function(req, res){
       UserModel.findOneAndUpdate({_id: userData._id}, userData, function (err, user) {
         if(err){
           if(err.toString().indexOf('E11000') > -1){
-            err = new Error('There already is a userin the system!');
+            err = new Error('There already is a user in the system!');
           }
           res.status(400);
           return res.send({reason:err.toString()});
