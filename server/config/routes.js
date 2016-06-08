@@ -8,17 +8,6 @@ module.exports = function(app){
   //this will look in the public/app directory and process the files as jade templates
   // app.get('/admin/users', users)
 
-  // app.get('/test', function(req, res, next){
-  //   console.log('test route', req.testing);
-  //   res.end();
-  // })
-  // app.ws('/test', function(ws, req){
-  //   ws.on('message', function(msg){
-  //     console.log(msg);
-  //   });
-  //   console.log('socket', req.testing);
-  // });
-
   app.get('/api/users', auth.requiresRole('admin'), users.getUsers);
   app.post('/api/users', users.createUser);
   app.put('/api/users', users.updateUser);

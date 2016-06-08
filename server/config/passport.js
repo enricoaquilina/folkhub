@@ -33,7 +33,6 @@ module.exports = function(){
       done(null, user._id);
     }
   });
-
   passport.deserializeUser(function(id, done) {
     UserModel.findById(id, function(err, user){
       if(user){

@@ -1,11 +1,12 @@
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose');
 
-var hubUserSchema = mongoose.Schema({
-  hubname: {type:String, unique: true},
+var HubUserSchema = mongoose.Schema({
+  hubname: {type:String},
+  username: {type:String},
   userid: {type:String},
-  userconnection: {type:Object}
   datesubbed: {type:Date, default:Date.now}
 });
+HubUserSchema.index({hubname: 1, username: 1, userid: 1},
+  {unique: true});
 
-var HubUserModel = mongoose.model('HubUserModel', hubUserSchema);
+var HubUser = mongoose.model('HubUser', HubUserSchema);

@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
     encrypt = require('../common/crypto/encrypt'),
     User = require('../models/UserModel'),
-    Hub = require('../models/HubModel');
+    Hub = require('../models/HubModel'),
+    HubUser = require('../models/HubUserModel');
 
 module.exports = function(app, config){
   //connect to mongoose

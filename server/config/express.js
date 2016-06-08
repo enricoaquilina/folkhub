@@ -8,7 +8,7 @@ var express = require('express'),
     redis = require('redis'),
     passport = require('passport'),
     url = require('url'),
-    WebSocketServer = require('ws').Server;
+    http = require('http');
 
 module.exports = function(app, config, clients){
   //compile function for stylus which gets used by the middleware
@@ -51,5 +51,7 @@ module.exports = function(app, config, clients){
       compile: compile
     }
   ));
-
+  // app.listen(config.port, function(){
+  //     console.log("App started on port " + config.port);
+  // });
 }

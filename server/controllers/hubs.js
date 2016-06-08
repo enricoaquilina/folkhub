@@ -1,6 +1,6 @@
 var HubModel = require('mongoose').model('Hub'),
-    HubUser
-    config = require('../config/config');
+    HubUserModel = require('mongoose').model('HubUser'),
+    uuid = require('node-uuid');
 
 exports.getHubs = function(req, res, next){
   HubModel.find({}).exec(function(err, collection){
@@ -43,23 +43,27 @@ exports.createHub = function(req, res, next){
 }
 exports.createHubUser = function(req, res, next){
   var hubuser = req.body;
-  // hubuser.userconnection =
-  var loc = config[process.env.NODE_ENV].ws;
+  hubuser.username = req.user.username;
+  hubuser.userid = uuid.v1();
 
-  var l = loc.upgradeReq.url;
-  console.log(l);
+  HubUserModel.create(hubuser, function(err, hubuser){
+    if(err) {
+      res.status(400);
+      res.send({reason:err.toString()});
+    }
+    res.send(hubuser);
+  })
+}
+exports.getHubUserByUsername = function(req, res, next){
+  HubUserModel.findOne({ username: req.username}).limit(1).exec(function(err, hubuser){
+    if(err) {return next(err);}
+    var found = false;
 
-  // console.log(hubuser);
-  // HubModel.create(newHub, function(err, newHub){
-  //   if(err) {
-  //     if(err.toString().indexOf('E11000') > -1){
-  //       err = new Error('There already is a hub with the same name');
-  //     }
-  //     res.status(400);
-  //     res.send({reason:err.toString()});
-  //   }
-  //   res.send(newHub);
-  // })
+    if(hubuser){
+      found = true;
+    }
+    res.send({success:found, hubuser:hubuser});
+  });
 }
 exports.deleteHub = function(req, res, next){
   var hubData = req.body;

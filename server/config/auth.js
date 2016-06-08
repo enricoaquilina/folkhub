@@ -1,4 +1,5 @@
 var passport = require('passport');
+//require websockets and update the id from db
 
 exports.authenticate = function(req, res, next){
   req.body.username = req.body.username.toLowerCase();
