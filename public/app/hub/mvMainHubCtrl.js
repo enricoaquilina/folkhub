@@ -44,8 +44,9 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
   }
   $scope.subscribe = function(){
     var hubuser = {
-      hubname: Identity.currenthub.hubname
+      hubname: 'hub:'+Identity.currenthub.hubname
     }
+
     HubUser.create(hubuser)
       .then(function(){
         Notifier.success('You have subscribed to the hub!');
@@ -53,6 +54,5 @@ angular.module('app').controller('mvMainHubCtrl', function($scope, $routeParams,
       }, function(reason){
         Notifier.error(reason);
       })
-
   }
 })

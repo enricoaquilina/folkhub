@@ -54,15 +54,34 @@ exports.createHubUser = function(req, res, next){
     res.send(hubuser);
   })
 }
-exports.getHubUserByUsername = function(req, res, next){
-  HubUserModel.findOne({ username: req.username}).limit(1).exec(function(err, hubuser){
+exports.subscribetoHubs = function(req, res, next){
+  var hubs = JSON.parse(req.body);
+  var username = req.user.username;
+  var userid = uuid.v1();
+
+  for (var i = 0; i < hubs.length; i++) {
+
+    var obj = {
+      hubname: hubs[i],
+      username: username,
+      userid: userid
+    }
+
+    HubUserModel.create(obj, function(err, hubUser){
+      if(err) {
+        res.status(400);
+        res.send({reason:err.toString()});
+      }
+    })
+  }
+}
+exports.getHubUserByUsername = function(username){
+  HubUserModel.findOne({ username: username}).limit(1).exec(function(err, hubuser){
     if(err) {return next(err);}
     var found = false;
-
     if(hubuser){
-      found = true;
+      return hubuser;
     }
-    res.send({success:found, hubuser:hubuser});
   });
 }
 exports.deleteHub = function(req, res, next){

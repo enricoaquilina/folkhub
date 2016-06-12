@@ -1,5 +1,7 @@
 var UserModel = require('mongoose').model('User'),
-    encrypt = require('../common/crypto/encrypt');
+    HubUserModel = require('mongoose').model('HubUser'),
+    encrypt = require('../common/crypto/encrypt'),
+    hubs = require('./hubs');
 
 exports.getUsers = function(req, res){
   UserModel.find({ username: { $ne: req.user.username } })
@@ -32,6 +34,10 @@ exports.createUser = function(req, res, next){
     }
     req.logIn(newUser, function(err){
       if(err) {return next(err);}
+
+      req.body = JSON.stringify(['main', 'hub:science', 'hub:tech', 'hub:news', 'hub:lifestyle']);
+
+      hubs.subscribetoHubs(req, res);
       res.send(newUser);
     })
   })

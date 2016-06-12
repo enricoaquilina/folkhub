@@ -126,7 +126,7 @@ angular.module('app').config(function($routeProvider, $locationProvider){
     .when('/:hubname',
       {
         templateUrl: '/partials/main/main',
-        controller: 'mvMainHubCtrl'
+        controller: 'mvMainCtrl'
       }
     );
 });

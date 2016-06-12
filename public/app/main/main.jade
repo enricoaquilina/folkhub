@@ -6,21 +6,16 @@
       div.messages(name="hubMessages")
         ul
           li(ng-repeat="msg in hubmessages track by $index") {{msg}}
-            
     .col-md-3
       div.users(name="users")
         p.text-center Users currently in the hub
         ul
           li(ng-repeat="user in users") {{user}}
-    
     .col-md-1
       a.btn.btn-danger(ng-show="identity.isAuthenticated()" ng-click="subscribe()") Subscribe
-      
   .row
     .col-md-12
-      //- .form-control
-      input.form-control.userinput(placeholder="Your message here :)", type="text" ng-model="message")
-        
+      input.form-control.userinput(placeholder="Your message here :)" type="text" ng-model="message" ng-show="identity.isAuthenticated()")
   .row
     .col-md-12
-      button.btn.btn-primary(ng-click="send(message)") Talk
+      button.btn.btn-primary(ng-click="send(message)" ng-show="identity.isAuthenticated()") Talk
