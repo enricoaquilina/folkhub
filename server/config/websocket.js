@@ -17,7 +17,6 @@ module.exports = function(app, config, redisclients){
     config.id = ctr;
 
     ws.on('message', function incoming(message){
-      console.log(message);
       wss.broadcast(message);
     });
     // ws.on('close', function(){
@@ -30,8 +29,10 @@ module.exports = function(app, config, redisclients){
     // });
     wss.broadcast = function broadcast(data) {
       wss.clients.forEach(function each(client) {
+
         var msgData = JSON.parse(data);
-        client.send(msgData.username+': '+msgData.message);
+        console.log(msgData);
+      //   client.send(msgData.username+': '+msgData.message);
       });
     };
 
