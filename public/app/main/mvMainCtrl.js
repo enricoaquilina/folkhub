@@ -12,20 +12,18 @@ angular.module('app').controller('mvMainCtrl', function($scope, $routeParams, Id
   // };
 
   $scope.send = function(message){
+    var hubMsg = {
+      username: Identity.currentuser.username,
+      message: message,
+      time: new Date()
+    };
     Hub.getHubDetails($routeParams.hubname)
     .then(function(success){
-      var hubMsg;
-      if(success){
-        if(message != null && message != ''){
-          hubMsg = {
-            username: Identity.currentuser.username,
-            hubname: 'hub:'+Identity.currenthub.hubname,
-            message: message,
-            time: new Date()
-          }
-        }
-        if($routeParams.hubname == undefined)
-          hubMsg.hubname = 'hub:main'
+      if($routeParams.hubname && message){
+        hubMsg.hubname = 'hub:'+Identity.currenthub.hubname;
+      }
+      else if(!$routeParams.hubname){
+        hubMsg.hubname = 'hub:main';
       }
       ws.send(JSON.stringify(hubMsg));
       $scope.message = '';

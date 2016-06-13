@@ -2,7 +2,8 @@ var http = require('http'),
     url = require('url'),
     WebSocketServer = require('ws').Server,
     clients = {},
-    id = 0;
+    id = 0
+    clientList = [];
 
 module.exports = function(app, config, redisclients){
   var server = http.createServer(app);
@@ -19,20 +20,10 @@ module.exports = function(app, config, redisclients){
     ws.on('message', function incoming(message){
       wss.broadcast(message);
     });
-    // ws.on('close', function(){
-    //   var index = clients.indexOf(ws);
-    //   if(index > -1)
-    //   {
-    //     clients.splice(index, 1);
-    //   }
-    //   // console.log('websocket closed: '+clients.length);
-    // });
     wss.broadcast = function broadcast(data) {
       wss.clients.forEach(function each(client) {
-
         var msgData = JSON.parse(data);
-        console.log(msgData);
-      //   client.send(msgData.username+': '+msgData.message);
+        client.send(msgData.username+': '+msgData.message);
       });
     };
 
