@@ -32,6 +32,8 @@ module.exports = function(app, config, redisclients){
     })
     wss.roomBroadcast = function roomBroadcast(data) {
       var msgData = JSON.parse(data);
+      // console.log(listClients);
+      // return false;
       HubUserModel.find({hubname: msgData.hubname}).exec(function(err, collection){
         for (var i = 0; i < collection.length; i++) {
           listClients[collection[i].userid].send(data);

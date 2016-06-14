@@ -5,7 +5,7 @@ var passport = require('passport'),
 
 exports.authenticate = function(req, res, next){
   req.body.username = req.body.username.toLowerCase();
-  console.log(req.body);
+
   var auth = passport.authenticate('local', function(err, user){
     //this uses the method defined in server.js for LocalStrategy
     if(err) { return next(err); }
@@ -23,7 +23,7 @@ exports.authenticate = function(req, res, next){
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
           delete config.listClients[req.body.clientID];
-          console.log(config.listClients);
+          // console.log(config.listClients);
         }
       });
       res.send({success:true, user:user});
