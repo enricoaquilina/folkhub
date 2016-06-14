@@ -23,7 +23,7 @@ exports.authenticate = function(req, res, next){
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
           delete config.listClients[req.body.clientID];
-          // console.log(config.listClients);
+          console.log(config.listClients);
         }
       });
       res.send({success:true, user:user});
