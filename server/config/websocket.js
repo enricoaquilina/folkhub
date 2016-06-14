@@ -24,7 +24,7 @@ module.exports = function(app, config, redisclients){
     config.listClients = listClients;
     console.log('here:ws');
     console.log(ws.id);
-    console.log(listClients[ws.id]);
+    // console.log(listClients[ws.id]);
 
     ws.on('message', function incoming(message){
       wss.roomBroadcast(message);
