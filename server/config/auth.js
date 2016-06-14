@@ -21,8 +21,6 @@ exports.authenticate = function(req, res, next){
         // if(err) {return next(err);}
         if(hubuser){
           console.log('here');
-          console.log(config.listClients);
-
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
           delete config.listClients[req.body.clientID];
