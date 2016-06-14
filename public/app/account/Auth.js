@@ -1,8 +1,8 @@
 angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc, Info){
   return {
-    authenticate: function(username, password){
+    authenticate: function(username, password, clientID){
       var dfd = $q.defer();
-      $http.post('/login', { username: username, password: password })
+      $http.post('/login', { username: username, password: password, clientID:clientID})
       .then(function(response){
         if(response.data.success){
           var user = new UserRsc();

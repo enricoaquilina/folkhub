@@ -2,7 +2,7 @@ angular.module('app')
 .controller('mvAccountCtrl', function($scope, $http, $location, Notifier, Identity, Auth){
   $scope.identity = Identity;
   $scope.authenticate = function(username, password){
-    Auth.authenticate(username, password)
+    Auth.authenticate(username, password, Identity.clientID)
     .then(function(success){
       if(success){
         Notifier.success('You have successfully logged in!');

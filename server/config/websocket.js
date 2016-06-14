@@ -2,8 +2,9 @@ var http = require('http'),
     url = require('url'),
     WebSocketServer = require('ws').Server,
     clients = {},
-    id = 0
-    clientList = [];
+    numClients = 0,
+    hubs = require('../controllers/hubs'),
+    listClients = [];
 
 module.exports = function(app, config, redisclients){
   var server = http.createServer(app);
@@ -12,21 +13,37 @@ module.exports = function(app, config, redisclients){
   var wss = new WebSocketServer({server: server});
 
   wss.on('connection', function conn(ws) {
-    var ctr = id++;
-    clients[ctr] = ws;
-    config.clients = clients;
-    config.id = ctr;
+    var ctr = numClients += 1;
+
+    ws.id = ctr;
+    //listClients[sessionID] = ws;
+    listClients[ws.id] = ws;
+    ws.send(JSON.stringify({
+      clientID : ws.id
+    }));
+
+    config.listClients = listClients;
 
     ws.on('message', function incoming(message){
-      wss.broadcast(message);
+      wss.roomBroadcast(message);
     });
-    wss.broadcast = function broadcast(data) {
-      wss.clients.forEach(function each(client) {
-        var msgData = JSON.parse(data);
-        client.send(msgData.username+': '+msgData.message);
+    ws.on('close', function(ws){
+      delete listClients[ws.id];
+    })
+    wss.roomBroadcast = function roomBroadcast(data) {
+      var msgData = JSON.parse(data);
+      HubUserModel.find({hubname: msgData.hubname}).exec(function(err, collection){
+        for (var i = 0; i < collection.length; i++) {
+          listClients[collection[i].userid].send(data);
+        }
       });
     };
-
+    // wss.broadcast = function broadcast(data) {
+    //   wss.clients.forEach(function each(client) {
+    //     var msgData = JSON.parse(data);
+    //     client.send(msgData.username+': '+msgData.message);
+    //   });
+    // };
     // redisclients.subscriber.subscribe('test');
     // redisclients.subscriber.on('message', function(channel, message){
     //   ws.send(message);

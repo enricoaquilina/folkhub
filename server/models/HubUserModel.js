@@ -6,7 +6,6 @@ var HubUserSchema = mongoose.Schema({
   userid: {type:String},
   datesubbed: {type:Date, default:Date.now}
 });
-HubUserSchema.index({hubname: 1, username: 1, userid: 1},
-  {unique: true});
+
 
 var HubUser = mongoose.model('HubUser', HubUserSchema);

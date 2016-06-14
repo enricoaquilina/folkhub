@@ -7,15 +7,16 @@ var config = require('./server/config/config')[env];
 
 var clients = require('./server/config/redisClients');
 
-require('./server/config/websocket')(app, config, clients);
+require('./server/config/db-config')(app, config);
+
 
 require('./server/config/express')(app, config, clients);
-
-require('./server/config/db-config')(app, config);
 
 require('./server/config/passport')();
 
 require('./server/config/routes')(app);
+
+require('./server/config/websocket')(app, config, clients);
 
 
 
