@@ -22,11 +22,11 @@ exports.authenticate = function(req, res, next){
         if(hubuser){
           console.log('here');
           console.log(config.listClients);
-          
+
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
           delete config.listClients[req.body.clientID];
-          console.log(config.listClients);
+          console.log(config.listClients[hubuser.userid]);
         }
       });
       res.send({success:true, user:user});
