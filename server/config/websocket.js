@@ -16,13 +16,13 @@ module.exports = function(app, config, redisclients){
     var ctr = numClients += 1;
 
     ws.id = ctr;
-    //listClients[sessionID] = ws;
     listClients[ws.id] = ws;
     ws.send(JSON.stringify({
       clientID : ws.id
     }));
 
     config.listClients = listClients;
+    console.log(listClients);
 
     ws.on('message', function incoming(message){
       wss.roomBroadcast(message);
