@@ -20,6 +20,7 @@ exports.authenticate = function(req, res, next){
       .limit(1).exec(function(err, hubuser){
         // if(err) {return next(err);}
         if(hubuser){
+          console.log('here');
           console.log(req.body.clientID);
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
