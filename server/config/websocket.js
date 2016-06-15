@@ -22,9 +22,6 @@ module.exports = function(app, config, redisclients){
     }));
 
     config.listClients = listClients;
-    // console.log('here:ws');
-    // console.log(ws.id);
-    // console.log(listClients[ws.id]);
 
     ws.on('message', function incoming(message){
       wss.roomBroadcast(message);
@@ -34,11 +31,11 @@ module.exports = function(app, config, redisclients){
     })
     wss.roomBroadcast = function roomBroadcast(data) {
       var msgData = JSON.parse(data);
-      // console.log(listClients);
-      // return false;
       HubUserModel.find({hubname: msgData.hubname}).exec(function(err, collection){
         for (var i = 0; i < collection.length; i++) {
-          listClients[collection[i].userid].send(data);
+          if(listClients[collection[i].userid]){
+            listClients[collection[i].userid].send(data);
+          }
         }
       });
     };

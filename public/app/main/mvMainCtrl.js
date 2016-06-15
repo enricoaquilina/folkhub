@@ -48,15 +48,14 @@ angular.module('app').controller('mvMainCtrl', function($scope, $routeParams,$lo
       $scope.hubmessages.push(msgData.username+': '+msgData.message);
     })
   };
-  //
-  // ws.onerror = function(event) {
-  //   // sys.debug(event);
-  //   console.log(event);
-  // };
+
+  ws.onerror = function(event) {
+    // sys.debug(event);
+    console.log(event);
+  };
   $scope.subscribe = function(){
     var hubuser={};
-
-    hubuser.hubname = 'hub:main';
+    hubuser.hubname = 'hub:'+Identity.currenthub.hubname;
 
     HubUser.create(hubuser)
       .then(function(){

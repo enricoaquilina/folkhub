@@ -7,10 +7,10 @@ exports.getHubs = function(req, res, next){
     res.send(collection);
   });
 }
-exports.getUserHubs = function(hubname){
-  HubModel.find({creator: username}).exec(function(err, collection){
+exports.getUserHubs = function(req, res, next){
+  HubModel.find({creator: req.user.username}).exec(function(err, collection){
     res.send(collection);
-  })
+  });
 }
 
 exports.getHubDetails = function(req, res, next){

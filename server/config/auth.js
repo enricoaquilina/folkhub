@@ -17,15 +17,12 @@ exports.authenticate = function(req, res, next){
     req.logIn(user, function(err){
       if(err) {return next(err);}
       HubUserModel.findOne({ username: req.body.username})
-      .limit(1).exec(function(err, hubuser){
+      .exec(function(err, hubuser){
         // if(err) {return next(err);}
         if(hubuser){
-          console.log('here');
-          console.log(req.body.clientID);
           config.listClients[hubuser.userid] = config.listClients[req.body.clientID];
           config.listClients[hubuser.userid].id = hubuser.userid;
           delete config.listClients[req.body.clientID];
-          console.log(config.listClients[hubuser.userid].id);
         }
       });
       res.send({success:true, user:user});

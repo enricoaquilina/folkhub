@@ -86,7 +86,7 @@ angular.module('app').factory('Auth', function($q, $http, Identity, UserRsc, Inf
       var dfd = $q.defer();
       var newUser = new UserRsc(userData);
       newUser.$save().then(function(){
-        Identity.currentuser = newUser;
+        // Identity.currentuser = newUser;
         dfd.resolve();
       }, function(response){
         dfd.reject(response.data.reason);

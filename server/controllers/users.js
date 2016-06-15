@@ -35,7 +35,7 @@ exports.createUser = function(req, res, next){
     req.logIn(newUser, function(err){
       if(err) {return next(err);}
 
-      req.body = JSON.stringify(['main', 'hub:science', 'hub:tech', 'hub:news', 'hub:lifestyle']);
+      req.body = JSON.stringify(['hub:main', 'hub:science', 'hub:tech', 'hub:news', 'hub:lifestyle']);
 
       hubs.subscribetoHubs(req, res);
       res.send(newUser);
